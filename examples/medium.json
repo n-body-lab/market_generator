@@ -1,0 +1,1 @@
+{"n_agents": 6, "n_tokens": 12, "price_range": [1, 12], "max_candidate_depth": 2, "task_dependency_range": [1, 4], "ownership_concentration": 0.5, "budget_leeway": 0.3, "seed": 42}

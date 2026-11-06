@@ -1,0 +1,342 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "HIVEMARKET 0.1 Generation Result",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "hivemarket/0.1"
+    },
+    "data": {
+      "$ref": "#/$defs/result"
+    }
+  },
+  "required": [
+    "schema_version",
+    "data"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "transfer": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "seller": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "buyer": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "token",
+        "seller",
+        "buyer"
+      ],
+      "additionalProperties": false
+    },
+    "solution": {
+      "type": "object",
+      "properties": {
+        "actions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/transfer"
+          }
+        },
+        "objective": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "minItems": 3,
+          "maxItems": 3
+        }
+      },
+      "required": [
+        "actions",
+        "objective"
+      ],
+      "additionalProperties": false
+    },
+    "market": {
+      "type": "object",
+      "properties": {
+        "prices": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "tasks": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "uniqueItems": true
+          }
+        },
+        "initial_owners": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "communication": {
+          "type": "object",
+          "properties": {
+            "buyer": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "seller": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "buyer",
+            "seller"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "prices",
+        "tasks",
+        "initial_owners",
+        "communication"
+      ],
+      "additionalProperties": false
+    },
+    "event": {
+      "type": "object",
+      "properties": {
+        "sequence": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "transfer": {
+          "$ref": "#/$defs/transfer"
+        },
+        "price": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "buyer_messages": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "seller_messages": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "signature": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "sequence",
+        "transfer",
+        "price",
+        "buyer_messages",
+        "seller_messages",
+        "signature"
+      ],
+      "additionalProperties": false
+    },
+    "state": {
+      "type": "object",
+      "properties": {
+        "owners": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "balances": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "progress": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "uniqueItems": true
+          }
+        },
+        "histories": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "events": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/event"
+          }
+        },
+        "execution_messages": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "exploratory_messages": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "owners",
+        "balances",
+        "progress",
+        "histories",
+        "events",
+        "execution_messages",
+        "exploratory_messages"
+      ],
+      "additionalProperties": false
+    },
+    "result": {
+      "type": "object",
+      "properties": {
+        "market": {
+          "$ref": "#/$defs/market"
+        },
+        "initial_state": {
+          "$ref": "#/$defs/state"
+        },
+        "reference_solution": {
+          "$ref": "#/$defs/solution"
+        },
+        "reference_budgets": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "token_routes": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "candidates": {
+          "type": "object",
+          "patternProperties": {
+            "^[0-9]+,[0-9]+$": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "config": {
+          "type": "object"
+        },
+        "seed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "feasibility_status": {
+          "const": "verified"
+        },
+        "optimality_status": {
+          "enum": [
+            "optimal",
+            "not_run",
+            "limit_reached"
+          ]
+        },
+        "optimal_solution": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/solution"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "best_solution": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/solution"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "difficulty": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "metadata": {
+          "type": [
+            "object",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "market",
+        "initial_state",
+        "reference_solution",
+        "reference_budgets",
+        "token_routes",
+        "candidates",
+        "config",
+        "seed",
+        "feasibility_status",
+        "optimality_status",
+        "optimal_solution",
+        "best_solution",
+        "difficulty",
+        "metadata"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
