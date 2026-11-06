@@ -1,0 +1,512 @@
+{
+  "criterion": "Token has an unmet agent-token requirement in the pre-action state.",
+  "decoy_study": [
+    {
+      "decoys": 1,
+      "full_fragility": 0.5,
+      "goal_relevant_fragility": 0.0,
+      "affordable_actions": 2,
+      "goal_relevant_actions": 1
+    },
+    {
+      "decoys": 3,
+      "full_fragility": 0.75,
+      "goal_relevant_fragility": 0.0,
+      "affordable_actions": 4,
+      "goal_relevant_actions": 1
+    },
+    {
+      "decoys": 5,
+      "full_fragility": 0.8333333333333334,
+      "goal_relevant_fragility": 0.0,
+      "affordable_actions": 6,
+      "goal_relevant_actions": 1
+    },
+    {
+      "decoys": 10,
+      "full_fragility": 0.9090909090909091,
+      "goal_relevant_fragility": 0.0,
+      "affordable_actions": 11,
+      "goal_relevant_actions": 1
+    },
+    {
+      "decoys": 20,
+      "full_fragility": 0.9523809523809523,
+      "goal_relevant_fragility": 0.0,
+      "affordable_actions": 21,
+      "goal_relevant_actions": 1
+    }
+  ],
+  "goal_relevant_family": [
+    {
+      "seed": 0,
+      "prices": [
+        [
+          0,
+          5
+        ],
+        [
+          5,
+          0
+        ]
+      ],
+      "balances": [
+        6,
+        7
+      ],
+      "analysis": {
+        "decision_fragility": 0.5,
+        "full_affordable_action_fragility": 0.5,
+        "full_fragility_interpretation": "Economic fragility over all affordable token transfers; sensitive to irrelevant action counts.",
+        "goal_relevant_fragility": 0.5,
+        "goal_relevance_criterion": "Transferred token has at least one unmet agent-token requirement in the pre-action state.",
+        "goal_relevant_actions": 2,
+        "goal_relevant_preserving_actions": 1,
+        "goal_relevant_destructive_actions": 1,
+        "goal_relevant_unclassified_actions": 0,
+        "irrelevant_actions": 0,
+        "goal_relevant_fragility_status": "exact",
+        "goal_relevant_fragility_bounds": [
+          0.5,
+          0.5
+        ],
+        "fragility_status": "exact",
+        "fragility_bounds": [
+          0.5,
+          0.5
+        ],
+        "communication_affordability": {
+          "agents_affording_one_message": 2,
+          "total_credits": 13
+        },
+        "baseline_status": "optimal",
+        "affordable_actions": 2,
+        "preserving_actions": 1,
+        "destructive_actions": 1,
+        "unclassified_actions": 0,
+        "actions": [
+          {
+            "action": {
+              "token": 0,
+              "seller": 0,
+              "buyer": 1
+            },
+            "status": "optimal",
+            "goal_relevant": true,
+            "preserves_feasibility": true,
+            "objective_difference_from_optimum": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "action": {
+              "token": 1,
+              "seller": 1,
+              "buyer": 0
+            },
+            "status": "infeasible",
+            "goal_relevant": true,
+            "preserves_feasibility": false,
+            "objective_difference_from_optimum": null
+          }
+        ],
+        "one_credit_expenditure_sensitivity": [
+          {
+            "sender": 0,
+            "credits_consumed": 1,
+            "status": "optimal",
+            "best_objective": [
+              4,
+              2,
+              10
+            ]
+          },
+          {
+            "sender": 1,
+            "credits_consumed": 1,
+            "status": "infeasible",
+            "best_objective": null
+          }
+        ]
+      }
+    },
+    {
+      "seed": 1,
+      "prices": [
+        [
+          0,
+          3
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "balances": [
+        4,
+        5
+      ],
+      "analysis": {
+        "decision_fragility": 0.5,
+        "full_affordable_action_fragility": 0.5,
+        "full_fragility_interpretation": "Economic fragility over all affordable token transfers; sensitive to irrelevant action counts.",
+        "goal_relevant_fragility": 0.5,
+        "goal_relevance_criterion": "Transferred token has at least one unmet agent-token requirement in the pre-action state.",
+        "goal_relevant_actions": 2,
+        "goal_relevant_preserving_actions": 1,
+        "goal_relevant_destructive_actions": 1,
+        "goal_relevant_unclassified_actions": 0,
+        "irrelevant_actions": 0,
+        "goal_relevant_fragility_status": "exact",
+        "goal_relevant_fragility_bounds": [
+          0.5,
+          0.5
+        ],
+        "fragility_status": "exact",
+        "fragility_bounds": [
+          0.5,
+          0.5
+        ],
+        "communication_affordability": {
+          "agents_affording_one_message": 2,
+          "total_credits": 9
+        },
+        "baseline_status": "optimal",
+        "affordable_actions": 2,
+        "preserving_actions": 1,
+        "destructive_actions": 1,
+        "unclassified_actions": 0,
+        "actions": [
+          {
+            "action": {
+              "token": 0,
+              "seller": 0,
+              "buyer": 1
+            },
+            "status": "optimal",
+            "goal_relevant": true,
+            "preserves_feasibility": true,
+            "objective_difference_from_optimum": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "action": {
+              "token": 1,
+              "seller": 1,
+              "buyer": 0
+            },
+            "status": "infeasible",
+            "goal_relevant": true,
+            "preserves_feasibility": false,
+            "objective_difference_from_optimum": null
+          }
+        ],
+        "one_credit_expenditure_sensitivity": [
+          {
+            "sender": 0,
+            "credits_consumed": 1,
+            "status": "optimal",
+            "best_objective": [
+              4,
+              2,
+              6
+            ]
+          },
+          {
+            "sender": 1,
+            "credits_consumed": 1,
+            "status": "infeasible",
+            "best_objective": null
+          }
+        ]
+      }
+    },
+    {
+      "seed": 2,
+      "prices": [
+        [
+          0,
+          5
+        ],
+        [
+          5,
+          0
+        ]
+      ],
+      "balances": [
+        6,
+        7
+      ],
+      "analysis": {
+        "decision_fragility": 0.5,
+        "full_affordable_action_fragility": 0.5,
+        "full_fragility_interpretation": "Economic fragility over all affordable token transfers; sensitive to irrelevant action counts.",
+        "goal_relevant_fragility": 0.5,
+        "goal_relevance_criterion": "Transferred token has at least one unmet agent-token requirement in the pre-action state.",
+        "goal_relevant_actions": 2,
+        "goal_relevant_preserving_actions": 1,
+        "goal_relevant_destructive_actions": 1,
+        "goal_relevant_unclassified_actions": 0,
+        "irrelevant_actions": 0,
+        "goal_relevant_fragility_status": "exact",
+        "goal_relevant_fragility_bounds": [
+          0.5,
+          0.5
+        ],
+        "fragility_status": "exact",
+        "fragility_bounds": [
+          0.5,
+          0.5
+        ],
+        "communication_affordability": {
+          "agents_affording_one_message": 2,
+          "total_credits": 13
+        },
+        "baseline_status": "optimal",
+        "affordable_actions": 2,
+        "preserving_actions": 1,
+        "destructive_actions": 1,
+        "unclassified_actions": 0,
+        "actions": [
+          {
+            "action": {
+              "token": 0,
+              "seller": 0,
+              "buyer": 1
+            },
+            "status": "optimal",
+            "goal_relevant": true,
+            "preserves_feasibility": true,
+            "objective_difference_from_optimum": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "action": {
+              "token": 1,
+              "seller": 1,
+              "buyer": 0
+            },
+            "status": "infeasible",
+            "goal_relevant": true,
+            "preserves_feasibility": false,
+            "objective_difference_from_optimum": null
+          }
+        ],
+        "one_credit_expenditure_sensitivity": [
+          {
+            "sender": 0,
+            "credits_consumed": 1,
+            "status": "optimal",
+            "best_objective": [
+              4,
+              2,
+              10
+            ]
+          },
+          {
+            "sender": 1,
+            "credits_consumed": 1,
+            "status": "infeasible",
+            "best_objective": null
+          }
+        ]
+      }
+    },
+    {
+      "seed": 3,
+      "prices": [
+        [
+          0,
+          5
+        ],
+        [
+          5,
+          0
+        ]
+      ],
+      "balances": [
+        6,
+        7
+      ],
+      "analysis": {
+        "decision_fragility": 0.5,
+        "full_affordable_action_fragility": 0.5,
+        "full_fragility_interpretation": "Economic fragility over all affordable token transfers; sensitive to irrelevant action counts.",
+        "goal_relevant_fragility": 0.5,
+        "goal_relevance_criterion": "Transferred token has at least one unmet agent-token requirement in the pre-action state.",
+        "goal_relevant_actions": 2,
+        "goal_relevant_preserving_actions": 1,
+        "goal_relevant_destructive_actions": 1,
+        "goal_relevant_unclassified_actions": 0,
+        "irrelevant_actions": 0,
+        "goal_relevant_fragility_status": "exact",
+        "goal_relevant_fragility_bounds": [
+          0.5,
+          0.5
+        ],
+        "fragility_status": "exact",
+        "fragility_bounds": [
+          0.5,
+          0.5
+        ],
+        "communication_affordability": {
+          "agents_affording_one_message": 2,
+          "total_credits": 13
+        },
+        "baseline_status": "optimal",
+        "affordable_actions": 2,
+        "preserving_actions": 1,
+        "destructive_actions": 1,
+        "unclassified_actions": 0,
+        "actions": [
+          {
+            "action": {
+              "token": 0,
+              "seller": 0,
+              "buyer": 1
+            },
+            "status": "optimal",
+            "goal_relevant": true,
+            "preserves_feasibility": true,
+            "objective_difference_from_optimum": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "action": {
+              "token": 1,
+              "seller": 1,
+              "buyer": 0
+            },
+            "status": "infeasible",
+            "goal_relevant": true,
+            "preserves_feasibility": false,
+            "objective_difference_from_optimum": null
+          }
+        ],
+        "one_credit_expenditure_sensitivity": [
+          {
+            "sender": 0,
+            "credits_consumed": 1,
+            "status": "optimal",
+            "best_objective": [
+              4,
+              2,
+              10
+            ]
+          },
+          {
+            "sender": 1,
+            "credits_consumed": 1,
+            "status": "infeasible",
+            "best_objective": null
+          }
+        ]
+      }
+    },
+    {
+      "seed": 4,
+      "prices": [
+        [
+          0,
+          4
+        ],
+        [
+          4,
+          0
+        ]
+      ],
+      "balances": [
+        5,
+        6
+      ],
+      "analysis": {
+        "decision_fragility": 0.5,
+        "full_affordable_action_fragility": 0.5,
+        "full_fragility_interpretation": "Economic fragility over all affordable token transfers; sensitive to irrelevant action counts.",
+        "goal_relevant_fragility": 0.5,
+        "goal_relevance_criterion": "Transferred token has at least one unmet agent-token requirement in the pre-action state.",
+        "goal_relevant_actions": 2,
+        "goal_relevant_preserving_actions": 1,
+        "goal_relevant_destructive_actions": 1,
+        "goal_relevant_unclassified_actions": 0,
+        "irrelevant_actions": 0,
+        "goal_relevant_fragility_status": "exact",
+        "goal_relevant_fragility_bounds": [
+          0.5,
+          0.5
+        ],
+        "fragility_status": "exact",
+        "fragility_bounds": [
+          0.5,
+          0.5
+        ],
+        "communication_affordability": {
+          "agents_affording_one_message": 2,
+          "total_credits": 11
+        },
+        "baseline_status": "optimal",
+        "affordable_actions": 2,
+        "preserving_actions": 1,
+        "destructive_actions": 1,
+        "unclassified_actions": 0,
+        "actions": [
+          {
+            "action": {
+              "token": 0,
+              "seller": 0,
+              "buyer": 1
+            },
+            "status": "optimal",
+            "goal_relevant": true,
+            "preserves_feasibility": true,
+            "objective_difference_from_optimum": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "action": {
+              "token": 1,
+              "seller": 1,
+              "buyer": 0
+            },
+            "status": "infeasible",
+            "goal_relevant": true,
+            "preserves_feasibility": false,
+            "objective_difference_from_optimum": null
+          }
+        ],
+        "one_credit_expenditure_sensitivity": [
+          {
+            "sender": 0,
+            "credits_consumed": 1,
+            "status": "optimal",
+            "best_objective": [
+              4,
+              2,
+              8
+            ]
+          },
+          {
+            "sender": 1,
+            "credits_consumed": 1,
+            "status": "infeasible",
+            "best_objective": null
+          }
+        ]
+      }
+    }
+  ]
+}

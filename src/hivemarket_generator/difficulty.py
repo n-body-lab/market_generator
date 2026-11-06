@@ -82,6 +82,9 @@ def analyse_fragility(market: Market, state: State, state_limit: int = 5000) -> 
     """Optional one-step exact reachability. Unknown cases remain unclassified."""
     from .optimization import solve_exact
     baseline = solve_exact(market, state, state_limit)
+    # Pre-action unmet requirements only: independent of optimal plans and outcomes.
+    pending_tokens = frozenset(t for task, progress in zip(market.tasks, state.progress)
+                               for t in task - progress)
     actions = []
     for token, seller in enumerate(state.owners):
         for buyer in range(market.n_agents):
@@ -100,6 +103,7 @@ def analyse_fragility(market: Market, state: State, state_limit: int = 5000) -> 
                 penalty = tuple(e + v - b for e, v, b in zip(
                     edge, outcome.best_solution.objective, baseline.best_solution.objective))
             actions.append({'action': action, 'status': outcome.status,
+                            'goal_relevant': token in pending_tokens,
                             'preserves_feasibility': True if outcome.best_solution else (
                                 False if outcome.status == 'infeasible' else None),
                             'objective_difference_from_optimum': penalty})
@@ -114,7 +118,25 @@ def analyse_fragility(market: Market, state: State, state_limit: int = 5000) -> 
     unknown = sum(a['preserves_feasibility'] is None for a in actions)
     total = len(actions)
     fragility = destructive / total if total and not unknown else None
-    return {'decision_fragility': fragility,
+    relevant = [a for a in actions if a['goal_relevant']]
+    relevant_destructive = sum(a['preserves_feasibility'] is False for a in relevant)
+    relevant_unknown = sum(a['preserves_feasibility'] is None for a in relevant)
+    relevant_count = len(relevant)
+    goal_fragility = relevant_destructive / relevant_count if relevant_count and not relevant_unknown else None
+    return {'decision_fragility': fragility,  # compatibility: full affordable action space
+            'full_affordable_action_fragility': fragility,
+            'full_fragility_interpretation': 'Economic fragility over all affordable token transfers; sensitive to irrelevant action counts.',
+            'goal_relevant_fragility': goal_fragility,
+            'goal_relevance_criterion': 'Transferred token has at least one unmet agent-token requirement in the pre-action state.',
+            'goal_relevant_actions': relevant_count,
+            'goal_relevant_preserving_actions': sum(a['preserves_feasibility'] is True for a in relevant),
+            'goal_relevant_destructive_actions': relevant_destructive,
+            'goal_relevant_unclassified_actions': relevant_unknown,
+            'irrelevant_actions': total - relevant_count,
+            'goal_relevant_fragility_status': ('no_goal_relevant_affordable_actions' if not relevant_count else
+                                              ('unavailable_search_limit' if relevant_unknown else 'exact')),
+            'goal_relevant_fragility_bounds': (relevant_destructive / relevant_count,
+                (relevant_destructive + relevant_unknown) / relevant_count) if relevant_count else None,
             'fragility_status': 'no_affordable_actions' if not total else ('unavailable_search_limit' if unknown else 'exact'),
             'fragility_bounds': (destructive / total, (destructive + unknown) / total) if total else None,
             'communication_affordability': {

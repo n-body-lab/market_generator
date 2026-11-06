@@ -1,14 +1,22 @@
 """Controlled economic families, not agent policies. Seed varies the price scale."""
 import numpy as np
 from .config import MarketConfig
-from .models import Market
+from .models import Market, ExecutionMessages
 from .generation import GenerationResult, prepare_market
 
 
 def economic_family(name: str, seed: int = 42, decoys: int = 5,
                     budget_leeway: float = 0) -> GenerationResult:
     price = int(np.random.default_rng(seed).integers(2, 6))
-    if name == 'robust':
+    if name == 'goal_relevant_fragile':
+        # Both agents can buy their required token, but buyer 0 spending first
+        # leaves it unable to pay the seller message fee on the other trade.
+        market = Market(((0, price), (price, 0)),
+                        (frozenset({1}), frozenset({0})), (0, 1), ExecutionMessages(1, 1))
+        config = MarketConfig(n_agents=2, n_tokens=2, task_dependency_range=(1, 1), seed=seed,
+                              buyer_messages=1, seller_messages=1,
+                              budget_leeway=(price - 1 + budget_leeway, budget_leeway), leeway_mode='absolute')
+    elif name == 'robust':
         market = Market(((0, price), (price, 0)),
                         (frozenset({1}), frozenset({0})), (0, 1))
         config = MarketConfig(n_agents=2, n_tokens=2, task_dependency_range=(1, 1), seed=seed,

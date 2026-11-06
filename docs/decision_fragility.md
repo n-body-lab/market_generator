@@ -37,3 +37,15 @@ This is dependence within that schedule, not a global financing necessity theore
 
 One-credit expenditure sensitivity and per-buyer action classifications are
 exported alongside fragility. Discovery information costs are not measured.
+
+## V0.3 interpretation correction
+
+The historical `decision_fragility` measures the full affordable action space;
+extra irrelevant decoy tokens inflate it. It is now explicitly aliased as
+`full_affordable_action_fragility`. Use the complementary `goal_relevant_fragility`
+and its separate denominator/status to distinguish pending-token choices from
+irrelevant-token choices. The original highly constrained example is a liquidity
+trap with many irrelevant actions, not proof of difficult goal-relevant decisions.
+The new `goal_relevant_fragile` family has two incomplete agents and no decoys;
+one of two immediate goal-progressing purchases destroys global feasibility.
+Definitions, limitations and exact evidence are in `final_validation.md`.
