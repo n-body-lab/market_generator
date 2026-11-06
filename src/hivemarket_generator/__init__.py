@@ -15,3 +15,6 @@ from .generation import prepare_market
 __all__ += ['prepare_market']
 from .generation import GenerationFailure
 __all__ += ['GenerationFailure']
+from .families import economic_family
+from .difficulty import count_feasible_sequences, financing_dependence
+__all__ += ['economic_family', 'count_feasible_sequences', 'financing_dependence']
