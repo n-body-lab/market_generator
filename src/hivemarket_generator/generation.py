@@ -40,6 +40,7 @@ class GenerationResult:
     best_solution: Solution | None = None
     difficulty: dict | None = None
     metadata: dict | None = None
+    status: str = 'feasible'
 
 
 class GenerationFailure(RuntimeError):
@@ -103,14 +104,19 @@ def prepare_market(market: Market, config: MarketConfig) -> GenerationResult:
             and config.exact_state_limit > 0):
         from .optimization import solve_exact
         exact = solve_exact(market, initial, config.exact_state_limit, solution)
-        result = replace(result, optimality_status=exact.status,
+        result = replace(result, status=exact.conclusion, optimality_status=exact.status,
                          optimal_solution=exact.best_solution if exact.status == 'optimal' else None,
                          best_solution=exact.best_solution,
                          metadata=result.metadata | {'exact_search': {
                              'expanded_states': exact.expanded_states, 'discovered_states': exact.discovered_states,
-                             'proof_scope': exact.proof_scope}})
+                             'proof_scope': exact.proof_scope, 'lower_bound': exact.lower_bound,
+                             'optimality_gap': exact.optimality_gap, 'termination_reason': exact.termination_reason,
+                             'incumbent_objective': exact.best_solution.objective if exact.best_solution else None}})
         if exact.best_solution is not None:
             audit_solution(market, initial, exact.best_solution)
+    from .optimization import reference_quality
+    result = replace(result, metadata=result.metadata | {
+        'reference_quality': reference_quality(solution, result.optimal_solution)})
     from .difficulty import analyse_difficulty
     result = replace(result, difficulty=analyse_difficulty(result))
     from .constraints import requested_properties, realised_properties, satisfies

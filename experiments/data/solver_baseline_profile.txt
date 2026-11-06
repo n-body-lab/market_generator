@@ -1,0 +1,23 @@
+         103364 function calls (100327 primitive calls) in 0.081 seconds
+
+   Ordered by: cumulative time
+   List reduced from 32 to 15 due to restriction <15>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.019    0.019    0.091    0.091 /workspace/market_generator/src/hivemarket_generator/optimization.py:24(solve_exact)
+     4368    0.018    0.000    0.036    0.000 /workspace/market_generator/src/hivemarket_generator/simulation.py:6(execute)
+     3024    0.003    0.000    0.013    0.000 /workspace/market_generator/src/hivemarket_generator/scheduling.py:14(objective)
+9087/6050    0.005    0.000    0.009    0.000 {built-in method builtins.sum}
+     2074    0.006    0.000    0.008    0.000 /workspace/market_generator/src/hivemarket_generator/models.py:94(complete)
+    12092    0.006    0.000    0.006    0.000 /workspace/market_generator/src/hivemarket_generator/optimization.py:60(<genexpr>)
+     3037    0.004    0.000    0.004    0.000 <string>:2(__init__)
+    22244    0.004    0.000    0.004    0.000 {built-in method builtins.len}
+     9716    0.003    0.000    0.004    0.000 /workspace/market_generator/src/hivemarket_generator/models.py:26(n_agents)
+     6061    0.003    0.000    0.004    0.000 /workspace/market_generator/src/hivemarket_generator/scheduling.py:15(<genexpr>)
+     4433    0.001    0.000    0.003    0.000 /workspace/market_generator/src/hivemarket_generator/models.py:30(n_tokens)
+     2074    0.001    0.000    0.002    0.000 {built-in method builtins.all}
+     7419    0.001    0.000    0.001    0.000 /workspace/market_generator/src/hivemarket_generator/models.py:14(counts)
+     4153    0.001    0.000    0.001    0.000 /workspace/market_generator/src/hivemarket_generator/models.py:95(<genexpr>)
+     6061    0.001    0.000    0.001    0.000 /workspace/market_generator/src/hivemarket_generator/scheduling.py:16(<genexpr>)
+
+

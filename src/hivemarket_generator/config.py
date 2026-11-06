@@ -20,8 +20,8 @@ class MarketConfig:
     buyer_messages: int = 1
     seller_messages: int = 0
     exact_state_limit: int = 20000
-    exact_max_agents: int = 3
-    exact_max_tokens: int = 3
+    exact_max_agents: int = 6
+    exact_max_tokens: int = 12
     seed: int = 42
     target_indirect_dependency_fraction: float | None = None
     structural_constraints: dict[str, tuple[float, float]] | None = None

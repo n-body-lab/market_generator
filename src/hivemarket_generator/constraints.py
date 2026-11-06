@@ -47,7 +47,8 @@ def realised_properties(result: 'GenerationResult') -> dict[str, float]:
         'shared_demand_fraction': sum(v for v in demand.values() if v > 1) / sum(demand.values()) if demand else 0,
         'ownership_hhi': sum((m.initial_owners.count(i) / m.n_tokens)**2 for i in range(m.n_agents)) if m.n_tokens else 0,
         'shared_intermediaries': sum(v > 1 for v in intermediaries.values()),
-        'limited_slack_fraction': result.difficulty['resources']['fraction_limited_slack'],
+        'limited_slack_fraction': sum(((b-r)/r <= .1 if r else b == 0)
+                                      for b,r in zip(result.initial_state.balances,result.reference_budgets)) / m.n_agents,
         'competitive_alternative_fraction': alternatives / count if count else 0,
     }
     values.update({f'depth_{d}_fraction': depths.count(d) / count if count else 0 for d in range(1, 33)})
