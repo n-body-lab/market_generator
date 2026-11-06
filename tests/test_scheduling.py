@@ -83,3 +83,26 @@ def test_sale_proceeds_finance_later_purchase():
     actions = (Transfer(0, 0, 1), Transfer(0, 1, 0))
     assert reference_budgets(m, actions) == (0, 2, 0)
     replay(m, initial_state(m, (0, 2, 0)), actions)
+
+
+def test_price_modification_recomputes_selected_paths():
+    import numpy as np
+    from hivemarket_generator.prices import modify_prices
+    prices = ((0, 1, 1), (1, 0, 1), (1, 1, 0))
+    before = candidate_routes(prices)
+    modified = modify_prices(prices, 1, np.random.default_rng(1))
+    after = candidate_routes(modified)
+    assert any(before[pair][0] != after[pair][0] for pair in before)
+    assert all(p > 0 for i, row in enumerate(modified) for j, p in enumerate(row) if i != j)
+
+
+def test_complete_journey_exceeds_candidate_depth():
+    from hivemarket_generator.scheduling import reference_schedule, verify_solution
+    from hivemarket_generator.credits import reference_budgets
+    n = 5
+    prices = tuple(tuple(0 if i == j else (1 if 0 in (i, j) else 30)
+                         for j in range(n)) for i in range(n))
+    m = Market(prices, (frozenset(),) + (frozenset({0}),) * 4, (0,))
+    routes, solution = reference_schedule(m)
+    assert len(routes[0]) - 1 == 7
+    verify_solution(m, initial_state(m, reference_budgets(m, solution.actions)), solution)

@@ -43,7 +43,18 @@ class GenerationResult:
 
 
 def generate_market(config: MarketConfig) -> GenerationResult:
-    market = generate_instance(config)
+    result = prepare_market(generate_instance(config), config)
+    return replace(result, metadata=result.metadata | {'structure_source': 'seeded generation'})
+
+
+def prepare_market(market: Market, config: MarketConfig) -> GenerationResult:
+    """Benchmark a supplied market, using config for routing, budgets and search.
+
+    No prices/tasks are regenerated. Metadata distinguishes supplied structures.
+    """
+    validate_market(market)
+    if (market.n_agents, market.n_tokens) != (config.n_agents, config.n_tokens):
+        raise ValueError("config dimensions disagree with market")
     # No stale paths survive price modification.
     candidates = candidate_routes(market.prices, config.max_candidate_depth, config.alternatives)
     routes, solution = reference_schedule(market)
@@ -54,7 +65,9 @@ def generate_market(config: MarketConfig) -> GenerationResult:
     result = GenerationResult(market, initial, solution, required, routes, candidates, config, config.seed,
                             best_solution=solution,
                             metadata={'routing_objective': 'independent gross cost; exact per token up to 8 demanders',
-                                      'execution_policy': 'fixed buyer/seller messages; no discovery-cost claim'})
+                                      'execution_policy': 'fixed buyer/seller messages; no discovery-cost claim',
+                                      'package_version': '0.1.0',
+                                      'structure_source': 'supplied to prepare_market (generate_market uses seeded generation)'})
 
     if (market.n_agents <= config.exact_max_agents and market.n_tokens <= config.exact_max_tokens
             and config.exact_state_limit > 0):
@@ -68,4 +81,5 @@ def generate_market(config: MarketConfig) -> GenerationResult:
                              'proof_scope': exact.proof_scope}})
         if exact.best_solution is not None:
             audit_solution(market, initial, exact.best_solution)
-    return result
+    from .difficulty import analyse_difficulty
+    return replace(result, difficulty=analyse_difficulty(result))

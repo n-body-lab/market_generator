@@ -1,0 +1,5 @@
+# Versions exercised on Python 3.12.14; optional reproducibility constraints.
+# On Python 3.11, use pyproject.toml's compatible dependency resolution instead.
+numpy==2.3.5
+networkx==3.7
+pytest==9.2.0

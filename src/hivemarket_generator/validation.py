@@ -22,6 +22,10 @@ def validate_state(market: Market, state: State) -> None:
         raise ValueError('invalid state dimensions')
     if any(type(b) is not int or b < 0 for b in state.balances):
         raise ValueError('negative/noninteger balance')
+    if any(type(o) is not int or not 0 <= o < market.n_agents for o in state.owners):
+        raise ValueError('invalid current owner')
+    if type(state.execution_messages) is not int or state.execution_messages < 0:
+        raise ValueError('invalid execution messages')
     for t, history in enumerate(state.histories):
         if (not history or history[0] != market.initial_owners[t] or history[-1] != state.owners[t]
                 or any(type(o) is not int or not 0 <= o < market.n_agents for o in history)):
@@ -35,7 +39,8 @@ def validate_state(market: Market, state: State) -> None:
         action = event.transfer
         if not 0 <= action.token < market.n_tokens or not 0 <= action.buyer < market.n_agents:
             raise ValueError('invalid event IDs')
-        if (event.sequence != index or histories[action.token][-1] != action.seller
+        if (type(event.sequence) is not int or event.sequence != index
+                or histories[action.token][-1] != action.seller
                 or action.buyer == action.seller or event.price != market.prices[action.buyer][action.seller]
                 or (event.buyer_messages, event.seller_messages) != market.communication.counts(
                     action.token, action.seller, action.buyer)):
