@@ -156,6 +156,7 @@
               "seller": 0,
               "token": 0
             },
+            "goal_relevant": true,
             "objective_difference_from_optimum": [
               0,
               0,
@@ -170,6 +171,7 @@
               "seller": 2,
               "token": 1
             },
+            "goal_relevant": false,
             "objective_difference_from_optimum": null,
             "preserves_feasibility": false,
             "status": "infeasible"
@@ -188,6 +190,20 @@
           0.5
         ],
         "fragility_status": "exact",
+        "full_affordable_action_fragility": 0.5,
+        "full_fragility_interpretation": "Economic fragility over all affordable token transfers; sensitive to irrelevant action counts.",
+        "goal_relevance_criterion": "Transferred token has at least one unmet agent-token requirement in the pre-action state.",
+        "goal_relevant_actions": 1,
+        "goal_relevant_destructive_actions": 0,
+        "goal_relevant_fragility": 0.0,
+        "goal_relevant_fragility_bounds": [
+          0.0,
+          0.0
+        ],
+        "goal_relevant_fragility_status": "exact",
+        "goal_relevant_preserving_actions": 1,
+        "goal_relevant_unclassified_actions": 0,
+        "irrelevant_actions": 1,
         "one_credit_expenditure_sensitivity": [
           {
             "best_objective": null,

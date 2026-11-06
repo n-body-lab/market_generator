@@ -14,3 +14,10 @@ use the constrained six-agent/twelve-token presets. Their realised indirect
 fractions at seed 42 are 0, 3/14 and 13/14. These exports disable exact optimisation
 and explicitly report feasible/unproven. They demonstrate routing control, not
 proven strategic hardness. Full exports contain private generator information.
+
+V0.3 adds `goal_relevant_fragile.json`: both agents have unmet tasks, both affordable
+purchases are goal-relevant, and the wrong ordering prevents the other agent from
+paying its execution message fee. Full and goal-relevant fragility both equal 1/2.
+Regenerate it with `python experiments/fragility_validation.py`. The older three
+economic examples remain valid full-action-space measurements; the high-decoy
+example has zero fragility in its goal-relevant subset.

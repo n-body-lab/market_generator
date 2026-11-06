@@ -45,3 +45,12 @@ Full measurements comprise 300 preset cases, 300 routing-depth requests, 100
 incompatible-constraint controls, 300 paired-budget cases, 600 concentration/overlap
 cases and 400 small reference/optimal cases. Failures, unknown classifications and
 conditional denominators are retained in the reports and raw data.
+
+## V0.3 targeted completion
+
+The first requested fix passed 87 tests; the final suite passes 105, preserving
+all 75 V0.2 cases. Decoy sensitivity and a two-agent, two-task fragile ordering
+were verified exactly over seeds 0–4. Ledger corruption and intermediate
+unaffordability are independently checked against a trusted anchor. Seven research
+exports pass schema/import/strict replay. No expensive multi-seed scaling study
+was repeated; details and remaining trust assumptions are in `final_validation.md`.

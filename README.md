@@ -235,3 +235,22 @@ round trips, fragility and all three demonstrations.
 Repository modules separate configuration, models, prices, allocation, tasks,
 routing, simulation, scheduling, credits, optimisation, difficulty, serialisation
 and validation. Dependencies are NumPy and NetworkX; pytest is the test extra.
+
+## V0.3 final integration validation
+
+`analyse_fragility` now distinguishes `full_affordable_action_fragility` (the
+unchanged `decision_fragility`) from `goal_relevant_fragility`. Goal relevance
+means the transferred token has a pending requirement somewhere in the pre-action
+market; the filter is independent of optimal solutions. Extra unused tokens can
+inflate the first fraction while leaving the second zero. Neither measures actual
+agent difficulty. `economic_family("goal_relevant_fragile")` demonstrates a bad
+ordering of two goal-relevant purchases without decoys. See
+[final validation](docs/final_validation.md) for assumptions and reproducible evidence.
+
+For integration, use `validate_economic_state(market, trusted_initial, final, ledger)`
+to reconcile balances and provenance against an ordered continuation ledger.
+`validate_state` alone checks structure. Keep each transfer `Event` and each
+one-credit exploratory `CommunicationEvent(sender, recipient)` in actual order;
+execution-message charges are already in transfer events. Reference verification
+runs strict reconciliation automatically. The [final report](docs/final_validation.md)
+includes a tested import/replay example, trust assumptions and the pilot-readiness verdict.

@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from .models import Market, State, Transfer, complete
 from .routing import independent_token_route
 from .simulation import replay
-from .validation import validate_state
+from .validation import validate_state, validate_economic_state
 
 
 @dataclass(frozen=True)
@@ -28,7 +28,7 @@ def reference_schedule(market: Market) -> tuple[tuple[tuple[int, ...], ...], Sol
 def verify_solution(market: Market, initial: State, solution: Solution) -> State:
     validate_state(market, initial)
     final = replay(market, initial, solution.actions)
-    validate_state(market, final)
+    validate_economic_state(market, initial, final, final.events[len(initial.events):])
     if not complete(market, final) or objective(market, solution.actions) != solution.objective:
         raise ValueError('incomplete solution or false objective')
     if sum(initial.balances) - sum(final.balances) != final.execution_messages - initial.execution_messages:

@@ -1,4 +1,5 @@
-from .models import Market, State
+from collections.abc import Sequence
+from .models import Market, State, Event, CommunicationEvent
 
 
 def validate_market(market: Market) -> None:
@@ -90,3 +91,70 @@ def audit_solution(market: Market, initial: State, solution: 'Solution') -> None
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from .scheduling import Solution
+
+
+def validate_economic_state(market: Market, trusted_initial: State, final: State,
+                            ledger: Sequence[Event | CommunicationEvent]) -> None:
+    """Reconcile a continuation from a trusted balance anchor and ordered ledger.
+
+    Does not call simulation.execute/replay. Transfer sequence numbers continue
+    trusted_initial.events; communication ordering comes from the ledger sequence.
+    Every new transfer and exploratory message must be supplied, in actual order.
+    Execution messages are charged in their transfer Event, never as separate
+    CommunicationEvents. The trusted anchor's earlier economics are not re-proven.
+    No signature authenticity or external event-source authentication is implied.
+    """
+    validate_state(market, trusted_initial)
+    validate_state(market, final)
+    balances = list(trusted_initial.balances)
+    owners = list(trusted_initial.owners)
+    histories = list(trusted_initial.histories)
+    progress = list(trusted_initial.progress)
+    transfers = list(trusted_initial.events)
+    execution_messages = trusted_initial.execution_messages
+    exploratory_messages = trusted_initial.exploratory_messages
+    n = market.n_agents
+    for record in ledger:
+        if isinstance(record, CommunicationEvent):
+            sender, recipient = record.sender, record.recipient
+            if (type(sender) is not int or type(recipient) is not int
+                    or not 0 <= sender < n or not 0 <= recipient < n or sender == recipient):
+                raise ValueError('ledger: invalid communication endpoints')
+            if balances[sender] < 1:
+                raise ValueError('ledger: unaffordable exploratory message')
+            balances[sender] -= 1
+            exploratory_messages += 1
+        elif isinstance(record, Event):
+            action = record.transfer
+            t, seller, buyer = action.token, action.seller, action.buyer
+            if (any(type(i) is not int for i in (t, seller, buyer)) or not 0 <= t < market.n_tokens
+                    or not 0 <= seller < n or not 0 <= buyer < n or seller == buyer or owners[t] != seller):
+                raise ValueError('ledger: invalid transfer or ownership')
+            price = market.prices[buyer][seller]
+            mb, ms = market.communication.counts(t, seller, buyer)
+            if (type(record.sequence) is not int or record.sequence != len(transfers)
+                    or type(record.price) is not int or record.price != price
+                    or type(record.buyer_messages) is not int or type(record.seller_messages) is not int
+                    or (record.buyer_messages, record.seller_messages) != (mb, ms)):
+                raise ValueError('ledger: incorrect sequence, transaction price or execution-message charge')
+            # Both message fees must be affordable BEFORE incoming sale proceeds.
+            if balances[buyer] < price + mb or balances[seller] < ms:
+                raise ValueError('ledger: unaffordable transfer at an intermediate state')
+            balances[buyer] -= price
+            balances[seller] += price  # trading conserves credits
+            balances[buyer] -= mb
+            balances[seller] -= ms     # execution communication consumes credits
+            execution_messages += mb + ms
+            owners[t] = buyer
+            histories[t] += (buyer,)
+            if t in market.tasks[buyer]:
+                progress[buyer] = progress[buyer] | {t}
+            transfers.append(record)
+        else:
+            raise ValueError('ledger: unsupported event type')
+    if tuple(balances) != final.balances:
+        raise ValueError('ledger: reconstructed balances do not match final state')
+    reconstructed = State(tuple(owners), tuple(balances), tuple(progress), tuple(histories),
+                          tuple(transfers), execution_messages, exploratory_messages)
+    if reconstructed != final:
+        raise ValueError('ledger: final ownership, histories, progress, events or message counts do not match')
