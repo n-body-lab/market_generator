@@ -18,13 +18,18 @@ def generate_prices(config: MarketConfig, rng: np.random.Generator) -> tuple[tup
 
 
 def modify_prices(prices: tuple[tuple[int, ...], ...], count: int,
-                  rng: np.random.Generator) -> tuple[tuple[int, ...], ...]:
+                  rng: np.random.Generator,
+                  dependencies: tuple[tuple[int, int], ...] = ()) -> tuple[tuple[int, ...], ...]:
     """Raise selected direct prices above a two-edge alternative; retain all edges."""
     values = [list(row) for row in prices]
     n = len(values)
     if n < 3:
         return prices
     for _ in range(count):
-        seller, middle, buyer = (int(x) for x in rng.choice(n, 3, replace=False))
+        if dependencies:
+            seller, buyer = dependencies[int(rng.integers(len(dependencies)))]
+            middle = int(rng.choice([i for i in range(n) if i not in (seller, buyer)]))
+        else:
+            seller, middle, buyer = (int(x) for x in rng.choice(n, 3, replace=False))
         values[buyer][seller] = max(values[buyer][seller], values[middle][seller] + values[buyer][middle] + 1)
     return tuple(tuple(row) for row in values)

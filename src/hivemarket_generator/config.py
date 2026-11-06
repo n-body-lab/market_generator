@@ -23,16 +23,31 @@ class MarketConfig:
     exact_max_agents: int = 3
     exact_max_tokens: int = 3
     seed: int = 42
+    target_indirect_dependency_fraction: float | None = None
+    structural_constraints: dict[str, tuple[float, float]] | None = None
+    generation_attempt_limit: int = 100
 
     def __post_init__(self) -> None:
         for name in ('n_agents', 'n_tokens', 'max_candidate_depth', 'alternatives',
                      'price_modifications', 'buyer_messages', 'seller_messages',
-                     'exact_state_limit', 'exact_max_agents', 'exact_max_tokens', 'seed'):
+                     'exact_state_limit', 'exact_max_agents', 'exact_max_tokens', 'seed', 'generation_attempt_limit'):
             value = getattr(self, name)
             if type(value) is not int or value < 0:
                 raise ValueError(f'{name} must be a nonnegative integer')
         if self.n_agents < 1 or self.max_candidate_depth < 1 or self.alternatives < 1:
             raise ValueError('agents, depth and alternatives must be positive')
+        if self.generation_attempt_limit < 1:
+            raise ValueError('generation_attempt_limit must be positive')
+        if self.target_indirect_dependency_fraction is not None and not (
+                math.isfinite(self.target_indirect_dependency_fraction) and
+                0 <= self.target_indirect_dependency_fraction <= 1):
+            raise ValueError('invalid indirect fraction')
+        from .constraints import PROPERTY_NAMES
+        for name, interval in (self.structural_constraints or {}).items():
+            if name not in PROPERTY_NAMES or len(interval) != 2:
+                raise ValueError('unknown property or invalid interval')
+            if any(not math.isfinite(v) or v < 0 for v in interval) or interval[0] > interval[1]:
+                raise ValueError('invalid structural interval')
         lo, hi = self.task_dependency_range
         if not (0 <= lo <= hi <= self.n_tokens) or any(type(x) is not int for x in (lo, hi)):
             raise ValueError('invalid task dependency range')
@@ -52,10 +67,13 @@ class MarketConfig:
     @classmethod
     def preset(cls, level: str, **overrides: object) -> 'MarketConfig':
         params = {
-            'easy': dict(price_range=(1, 3), max_candidate_depth=1, budget_leeway=1.0),
-            'medium': dict(price_range=(1, 12), max_candidate_depth=2, budget_leeway=0.3),
+            'easy': dict(price_range=(1, 3), max_candidate_depth=1, budget_leeway=1.0,
+                         structural_constraints={'indirect_dependency_fraction': (0, 0.15)}),
+            'medium': dict(price_range=(1, 12), max_candidate_depth=2, budget_leeway=0.3,
+                           structural_constraints={'indirect_dependency_fraction': (0.2, 0.5)}),
             'hard': dict(price_range=(1, 30), max_candidate_depth=3, budget_leeway=0.0,
-                         ownership_concentration=0.15, price_modifications=3),
+                         ownership_concentration=0.15, price_modifications=3,
+                         structural_constraints={'indirect_dependency_fraction': (0.6, 1.0)}),
         }
         if level not in params:
             raise ValueError('unknown difficulty preset')

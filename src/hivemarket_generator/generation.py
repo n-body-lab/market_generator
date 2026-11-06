@@ -11,14 +11,14 @@ from .credits import reference_budgets, add_leeway
 from .scheduling import Solution, reference_schedule, verify_solution
 
 
-def generate_instance(config: MarketConfig) -> Market:
-    rng = np.random.default_rng(config.seed)
+def _candidate_instance(config: MarketConfig, rng: np.random.Generator) -> Market:
     prices = generate_prices(config, rng)
     owners = allocate_tokens(config.n_agents, config.n_tokens, config.ownership_concentration, rng)
     candidates = candidate_routes(prices, config.max_candidate_depth, config.alternatives)
     tasks = generate_tasks(config.n_agents, config.n_tokens, config.task_dependency_range, rng,
                            owners, candidates)
-    final_prices = modify_prices(prices, config.price_modifications, rng)
+    dependencies = tuple((owners[t], i) for i, task in enumerate(tasks) for t in sorted(task) if owners[t] != i)
+    final_prices = modify_prices(prices, config.price_modifications, rng, dependencies)
     market = Market(final_prices, tasks, owners, ExecutionMessages(config.buyer_messages, config.seller_messages))
     validate_market(market)
     return market
@@ -42,9 +42,39 @@ class GenerationResult:
     metadata: dict | None = None
 
 
+class GenerationFailure(RuntimeError):
+    def __init__(self, attempts: int, requested: dict, realised: dict):
+        self.attempts, self.requested_properties, self.last_realised_properties = attempts, requested, realised
+        super().__init__(f'No candidate satisfied constraints after {attempts} attempts: {requested}; last={realised}')
+
+
+def generate_instance(config: MarketConfig) -> Market:
+    # Same constrained sampling semantics as generate_market; preserve public API.
+    return generate_market(config).market
+
+
 def generate_market(config: MarketConfig) -> GenerationResult:
-    result = prepare_market(generate_instance(config), config)
-    return replace(result, metadata=result.metadata | {'structure_source': 'seeded generation'})
+    from .constraints import requested_properties, realised_properties, satisfies
+    requested = requested_properties(config)
+    rng = np.random.default_rng(config.seed)
+    realised = {}
+    for attempt in range(1, config.generation_attempt_limit + 1):
+        market = _candidate_instance(config, rng)
+        # Avoid spending exact-search work on candidates that will be rejected.
+        candidate_config = replace(config, exact_state_limit=0, structural_constraints=None,
+                                   target_indirect_dependency_fraction=None)
+        result = prepare_market(market, candidate_config)
+        realised = realised_properties(result)
+        if satisfies(requested, realised):
+            if config.exact_state_limit:
+                result = prepare_market(market, config)
+            else:
+                result = replace(result, config=config)
+            return replace(result, metadata=result.metadata | {
+                'structure_source': 'seeded constrained generation', 'generation_attempts': attempt,
+                'requested_properties': requested, 'realised_properties': realised,
+                'constraints_satisfied': True})
+    raise GenerationFailure(config.generation_attempt_limit, requested, realised)
 
 
 def prepare_market(market: Market, config: MarketConfig) -> GenerationResult:
@@ -82,4 +112,10 @@ def prepare_market(market: Market, config: MarketConfig) -> GenerationResult:
         if exact.best_solution is not None:
             audit_solution(market, initial, exact.best_solution)
     from .difficulty import analyse_difficulty
-    return replace(result, difficulty=analyse_difficulty(result))
+    result = replace(result, difficulty=analyse_difficulty(result))
+    from .constraints import requested_properties, realised_properties, satisfies
+    requested, realised = requested_properties(config), realised_properties(result)
+    if not satisfies(requested, realised):
+        raise GenerationFailure(1, requested, realised)
+    return replace(result, metadata=result.metadata | {
+        'requested_properties': requested, 'realised_properties': realised, 'constraints_satisfied': True})

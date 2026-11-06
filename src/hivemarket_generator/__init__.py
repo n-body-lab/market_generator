@@ -13,3 +13,5 @@ from .difficulty import analyse_difficulty, analyse_fragility
 __all__ += ['decode_result', 'solve_exact', 'OptimizationResult', 'analyse_difficulty', 'analyse_fragility']
 from .generation import prepare_market
 __all__ += ['prepare_market']
+from .generation import GenerationFailure
+__all__ += ['GenerationFailure']
