@@ -36,8 +36,8 @@ Objective is lexicographic (execution messages, transfers, gross payments).
 With a fixed messages-per-transfer policy, the first two coordinates are redundant.
 No claim about minimum discovery communication is made. All transfers on the
 complete directed graph remain legal, regardless of candidate-route depth.
-Candidate paths are bounded simple paths (positive prices make cycles unnecessary
-for a single shortest path); complete token walks can revisit agents without a
+Candidate paths are bounded walks (positive prices make cycles unnecessary
+for the cheapest source–destination path); complete token walks can revisit agents without a
 length bound. Routing costs P[next,current] follow ownership direction.
 
 Exact optimisation uses uniform-cost search over (owners, progress, balances).
