@@ -1,17 +1,21 @@
 # Generation pipeline
 
-1. Validate config; initialise `numpy.random.default_rng(seed)`.
+1. Validate config; initialise `numpy.random.default_rng(seed)`. Repeat steps 2–10 for at most
+   `generation_attempt_limit` candidates, testing realised structural constraints
+   under final prices. Exhaustion raises `GenerationFailure`; it is not a proof
+   that the requested combination is mathematically impossible.
 2. Draw integer P; optionally symmetrise; set unused diagonal to zero.
 3. Allocate token IDs via Dirichlet weights and categorical owner draws.
 4. Build a NetworkX ownership-direction graph with weight P[next,current]. Compute
    bounded k-best candidate walks by layered dynamic programming, retaining k
    labels per destination at each layer. This avoids enumerating all walks.
 5. Sample an integer task size uniformly in the configured inclusive range per
-   agent. Sample a target hop count from {0,1,2,3}, then sample tokens without
+   agent. Sample a target hop count from zero to the largest cheapest retained path depth, then sample tokens without
    replacement with weight 1/(1+|candidate_hops-target|). Initially held tokens have
    hop count zero. Counts and overlapping requirements vary independently.
    This explicit route bias is a minimal V0.1 choice, not an agent model.
-6. For each requested modification choose distinct seller, middle, buyer, and raise
+6. For each requested modification choose an actual initially unmet owner-to-demander
+   dependency (random pair only when none exist), choose a distinct middle, and raise
    P[buyer,seller] above P[middle,seller]+P[buyer,middle]. Later modifications can
    change that opportunity; no claim about a permanent planted shortest path is
    made. Recompute all candidates and token routes under final prices.
@@ -36,7 +40,7 @@
 12. Compute transparent metrics and export config, seed, assumptions and results.
 
 `prepare_market` starts at step 6's final-price boundary with a supplied market;
-its config controls routing candidates, budgets and optimisation, not price/task
+its config controls routing candidates, budgets, constraints and optimisation, not price/task
 regeneration. All benchmark solutions remain private to the generator.
 
 ## Complexity and practical limits
