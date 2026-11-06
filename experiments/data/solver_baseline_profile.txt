@@ -19,5 +19,3 @@
      7419    0.001    0.000    0.001    0.000 /workspace/market_generator/src/hivemarket_generator/models.py:14(counts)
      4153    0.001    0.000    0.001    0.000 /workspace/market_generator/src/hivemarket_generator/models.py:95(<genexpr>)
      6061    0.001    0.000    0.001    0.000 /workspace/market_generator/src/hivemarket_generator/scheduling.py:16(<genexpr>)
-
-
