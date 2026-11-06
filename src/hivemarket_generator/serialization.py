@@ -61,6 +61,8 @@ def decode_result(data: dict[str, Any]) -> 'GenerationResult':
         config_data[key] = tuple(config_data[key])
     if isinstance(config_data['budget_leeway'], list):
         config_data['budget_leeway'] = tuple(config_data['budget_leeway'])
+    if config_data.get('structural_constraints') is not None:
+        config_data['structural_constraints'] = {k: tuple(v) for k,v in config_data['structural_constraints'].items()}
     def solution(raw: dict | None) -> Solution | None:
         if raw is None:
             return None
@@ -78,7 +80,7 @@ def decode_result(data: dict[str, Any]) -> 'GenerationResult':
          for key, paths in data['candidates'].items()},
         MarketConfig(**config_data), data['seed'], data['feasibility_status'],
         data['optimality_status'], solution(data['optimal_solution']), solution(data['best_solution']),
-        data['difficulty'], data['metadata'])
+        data['difficulty'], data['metadata'], data.get('status', 'optimal' if data['optimality_status'] == 'optimal' else 'feasible'))
     from .credits import reference_budgets, add_leeway
     from .routing import candidate_routes
     if (market.n_agents, market.n_tokens) != (result.config.n_agents, result.config.n_tokens):
@@ -111,6 +113,11 @@ def decode_result(data: dict[str, Any]) -> 'GenerationResult':
             raise ValueError('imported optimality claim could not be verified')
     elif result.optimal_solution is not None:
         raise ValueError('unproven optimal solution')
+    from .constraints import requested_properties, realised_properties, satisfies
+    if not satisfies(requested_properties(result.config), realised_properties(result)):
+        raise ValueError('import violates structural constraints')
+    if result.status != ('optimal' if result.optimal_solution else 'feasible'):
+        raise ValueError('inconsistent conclusion')
     return result
 
 

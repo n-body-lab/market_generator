@@ -40,11 +40,13 @@ Candidate paths are bounded walks (positive prices make cycles unnecessary
 for the cheapest source–destination path); complete token walks can revisit agents without a
 length bound. Routing costs P[next,current] follow ownership direction.
 
-Exact optimisation uses uniform-cost search over (owners, progress, balances).
+Exact optimisation uses admissible-bound A* (or optional uniform-cost search) over (owners, progress, balances).
 Histories do not affect future legal actions and can be omitted from search keys.
 With fixed integer initial credits, balances are bounded by total initial credits;
 ownership and progress are finite. Each edge increases transfers, so nonnegative
-lexicographic edge costs permit label-setting Dijkstra. Popping a goal proves
+lexicographic edge costs and a consistent lower bound permit label-setting A*.
+The bound counts remaining agent-token requirements K, qK messages, and minimum
+incoming prices per requirement; each transfer can satisfy at most one. Popping a goal proves
 global optimality among all feasible token-transfer schedules under this policy.
 Exhaustion proves infeasibility; a state cap proves neither. Exploratory messages
 are omitted because removing them preserves feasibility and improves messages;

@@ -11,7 +11,8 @@ def generate_tasks(n_agents: int, n_tokens: int, bounds: tuple[int, int],
     """
     tasks = []
     for agent in range(n_agents):
-        desired_depth = int(rng.integers(0, 4))
+        depth = max((len(paths[0]) - 1 for paths in candidates.values()), default=0)
+        desired_depth = int(rng.integers(0, depth + 1))
         lengths = [0 if owner == agent else len(candidates[owner, agent][0]) - 1 for owner in owners]
         weights = np.array([1 / (1 + abs(length - desired_depth)) for length in lengths])
         count = int(rng.integers(bounds[0], bounds[1] + 1))

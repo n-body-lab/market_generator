@@ -30,3 +30,18 @@ Additional validation:
 
 Pytest reports a deprecation warning from the environment's externally installed
 AnyIO pytest plugin; all package tests complete successfully.
+
+## Engineering-review milestones
+
+Each follow-up milestone ran the full suite before its commit: 52 tests after
+controllability, 59 after decision fragility, 72 after optimisation improvements,
+and 75 after experimental characterisation. The original 48 tests remain intact.
+The final suite completed on Python 3.12.14; the external AnyIO warning remains.
+
+The current wheel builds successfully. All six committed research exports pass
+typed import/replay checks and JSON Schema validation. The controlled-study CLI
+was also exercised end-to-end on two seeds after the full 100-seed measured runs.
+Full measurements comprise 300 preset cases, 300 routing-depth requests, 100
+incompatible-constraint controls, 300 paired-budget cases, 600 concentration/overlap
+cases and 400 small reference/optimal cases. Failures, unknown classifications and
+conditional denominators are retained in the reports and raw data.

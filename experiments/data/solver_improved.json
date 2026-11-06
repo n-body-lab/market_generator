@@ -1,0 +1,2979 @@
+[
+  {
+    "n_agents": 2,
+    "n_tokens": 2,
+    "seed": 0,
+    "state_limit": 5000,
+    "use_lower_bound": false,
+    "seconds": 0.00016962600011538598,
+    "status": "optimal",
+    "termination": "exhausted",
+    "expanded": 5,
+    "discovered": 5,
+    "incumbent": [
+      2,
+      2,
+      16
+    ],
+    "lower_bound": [
+      2,
+      2,
+      16
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        2,
+        2,
+        16
+      ],
+      "proven_optimum": [
+        2,
+        2,
+        16
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 2,
+    "n_tokens": 2,
+    "seed": 0,
+    "state_limit": 5000,
+    "use_lower_bound": true,
+    "seconds": 6.936299996596063e-05,
+    "status": "optimal",
+    "termination": "frontier_bound",
+    "expanded": 0,
+    "discovered": 1,
+    "incumbent": [
+      2,
+      2,
+      16
+    ],
+    "lower_bound": [
+      2,
+      2,
+      16
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        2,
+        2,
+        16
+      ],
+      "proven_optimum": [
+        2,
+        2,
+        16
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 2,
+    "n_tokens": 2,
+    "seed": 1,
+    "state_limit": 5000,
+    "use_lower_bound": false,
+    "seconds": 8.948799995778245e-05,
+    "status": "optimal",
+    "termination": "exhausted",
+    "expanded": 3,
+    "discovered": 3,
+    "incumbent": [
+      2,
+      2,
+      14
+    ],
+    "lower_bound": [
+      2,
+      2,
+      14
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        2,
+        2,
+        14
+      ],
+      "proven_optimum": [
+        2,
+        2,
+        14
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 2,
+    "n_tokens": 2,
+    "seed": 1,
+    "state_limit": 5000,
+    "use_lower_bound": true,
+    "seconds": 0.0001444539998374239,
+    "status": "optimal",
+    "termination": "frontier_bound",
+    "expanded": 0,
+    "discovered": 1,
+    "incumbent": [
+      2,
+      2,
+      14
+    ],
+    "lower_bound": [
+      2,
+      2,
+      14
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        2,
+        2,
+        14
+      ],
+      "proven_optimum": [
+        2,
+        2,
+        14
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 2,
+    "n_tokens": 2,
+    "seed": 2,
+    "state_limit": 5000,
+    "use_lower_bound": false,
+    "seconds": 8.947300011641346e-05,
+    "status": "optimal",
+    "termination": "exhausted",
+    "expanded": 3,
+    "discovered": 3,
+    "incumbent": [
+      2,
+      2,
+      4
+    ],
+    "lower_bound": [
+      2,
+      2,
+      4
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        2,
+        2,
+        4
+      ],
+      "proven_optimum": [
+        2,
+        2,
+        4
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 2,
+    "n_tokens": 2,
+    "seed": 2,
+    "state_limit": 5000,
+    "use_lower_bound": true,
+    "seconds": 5.324199992173817e-05,
+    "status": "optimal",
+    "termination": "frontier_bound",
+    "expanded": 0,
+    "discovered": 1,
+    "incumbent": [
+      2,
+      2,
+      4
+    ],
+    "lower_bound": [
+      2,
+      2,
+      4
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        2,
+        2,
+        4
+      ],
+      "proven_optimum": [
+        2,
+        2,
+        4
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 2,
+    "n_tokens": 2,
+    "seed": 3,
+    "state_limit": 5000,
+    "use_lower_bound": false,
+    "seconds": 6.671999972240883e-05,
+    "status": "optimal",
+    "termination": "exhausted",
+    "expanded": 1,
+    "discovered": 1,
+    "incumbent": [
+      1,
+      1,
+      3
+    ],
+    "lower_bound": [
+      1,
+      1,
+      3
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        1,
+        1,
+        3
+      ],
+      "proven_optimum": [
+        1,
+        1,
+        3
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 2,
+    "n_tokens": 2,
+    "seed": 3,
+    "state_limit": 5000,
+    "use_lower_bound": true,
+    "seconds": 4.8462999984622e-05,
+    "status": "optimal",
+    "termination": "frontier_bound",
+    "expanded": 0,
+    "discovered": 1,
+    "incumbent": [
+      1,
+      1,
+      3
+    ],
+    "lower_bound": [
+      1,
+      1,
+      3
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        1,
+        1,
+        3
+      ],
+      "proven_optimum": [
+        1,
+        1,
+        3
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 2,
+    "n_tokens": 2,
+    "seed": 4,
+    "state_limit": 5000,
+    "use_lower_bound": false,
+    "seconds": 9.82500000645814e-05,
+    "status": "optimal",
+    "termination": "exhausted",
+    "expanded": 5,
+    "discovered": 5,
+    "incumbent": [
+      2,
+      2,
+      24
+    ],
+    "lower_bound": [
+      2,
+      2,
+      24
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        2,
+        2,
+        24
+      ],
+      "proven_optimum": [
+        2,
+        2,
+        24
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 2,
+    "n_tokens": 2,
+    "seed": 4,
+    "state_limit": 5000,
+    "use_lower_bound": true,
+    "seconds": 5.174899979465408e-05,
+    "status": "optimal",
+    "termination": "frontier_bound",
+    "expanded": 0,
+    "discovered": 1,
+    "incumbent": [
+      2,
+      2,
+      24
+    ],
+    "lower_bound": [
+      2,
+      2,
+      24
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        2,
+        2,
+        24
+      ],
+      "proven_optimum": [
+        2,
+        2,
+        24
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 3,
+    "n_tokens": 2,
+    "seed": 0,
+    "state_limit": 5000,
+    "use_lower_bound": false,
+    "seconds": 0.0005276699998830736,
+    "status": "optimal",
+    "termination": "frontier_bound",
+    "expanded": 20,
+    "discovered": 21,
+    "incumbent": [
+      3,
+      3,
+      10
+    ],
+    "lower_bound": [
+      3,
+      3,
+      10
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        4,
+        4,
+        10
+      ],
+      "proven_optimum": [
+        3,
+        3,
+        10
+      ],
+      "reference_is_optimal": false,
+      "lexicographic_excess": {
+        "coordinate": "messages",
+        "absolute": 1,
+        "relative": 0.25,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        1,
+        1,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 3,
+    "n_tokens": 2,
+    "seed": 0,
+    "state_limit": 5000,
+    "use_lower_bound": true,
+    "seconds": 0.0006451529998230399,
+    "status": "optimal",
+    "termination": "frontier_bound",
+    "expanded": 6,
+    "discovered": 7,
+    "incumbent": [
+      3,
+      3,
+      10
+    ],
+    "lower_bound": [
+      3,
+      3,
+      10
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        4,
+        4,
+        10
+      ],
+      "proven_optimum": [
+        3,
+        3,
+        10
+      ],
+      "reference_is_optimal": false,
+      "lexicographic_excess": {
+        "coordinate": "messages",
+        "absolute": 1,
+        "relative": 0.25,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        1,
+        1,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 3,
+    "n_tokens": 2,
+    "seed": 1,
+    "state_limit": 5000,
+    "use_lower_bound": false,
+    "seconds": 0.00010579899981166818,
+    "status": "optimal",
+    "termination": "exhausted",
+    "expanded": 5,
+    "discovered": 5,
+    "incumbent": [
+      2,
+      2,
+      17
+    ],
+    "lower_bound": [
+      2,
+      2,
+      17
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        2,
+        2,
+        17
+      ],
+      "proven_optimum": [
+        2,
+        2,
+        17
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 3,
+    "n_tokens": 2,
+    "seed": 1,
+    "state_limit": 5000,
+    "use_lower_bound": true,
+    "seconds": 5.6587000017316313e-05,
+    "status": "optimal",
+    "termination": "frontier_bound",
+    "expanded": 0,
+    "discovered": 1,
+    "incumbent": [
+      2,
+      2,
+      17
+    ],
+    "lower_bound": [
+      2,
+      2,
+      17
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        2,
+        2,
+        17
+      ],
+      "proven_optimum": [
+        2,
+        2,
+        17
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 3,
+    "n_tokens": 2,
+    "seed": 2,
+    "state_limit": 5000,
+    "use_lower_bound": false,
+    "seconds": 0.0001650230001359887,
+    "status": "optimal",
+    "termination": "exhausted",
+    "expanded": 8,
+    "discovered": 8,
+    "incumbent": [
+      3,
+      3,
+      10
+    ],
+    "lower_bound": [
+      3,
+      3,
+      10
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        3,
+        3,
+        10
+      ],
+      "proven_optimum": [
+        3,
+        3,
+        10
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 3,
+    "n_tokens": 2,
+    "seed": 2,
+    "state_limit": 5000,
+    "use_lower_bound": true,
+    "seconds": 6.538099978570244e-05,
+    "status": "optimal",
+    "termination": "frontier_bound",
+    "expanded": 0,
+    "discovered": 1,
+    "incumbent": [
+      3,
+      3,
+      10
+    ],
+    "lower_bound": [
+      3,
+      3,
+      10
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        3,
+        3,
+        10
+      ],
+      "proven_optimum": [
+        3,
+        3,
+        10
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 3,
+    "n_tokens": 2,
+    "seed": 3,
+    "state_limit": 5000,
+    "use_lower_bound": false,
+    "seconds": 0.000664776000121492,
+    "status": "optimal",
+    "termination": "frontier_bound",
+    "expanded": 29,
+    "discovered": 30,
+    "incumbent": [
+      3,
+      3,
+      21
+    ],
+    "lower_bound": [
+      3,
+      3,
+      21
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        4,
+        4,
+        20
+      ],
+      "proven_optimum": [
+        3,
+        3,
+        21
+      ],
+      "reference_is_optimal": false,
+      "lexicographic_excess": {
+        "coordinate": "messages",
+        "absolute": 1,
+        "relative": 0.25,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        1,
+        1,
+        -1
+      ]
+    }
+  },
+  {
+    "n_agents": 3,
+    "n_tokens": 2,
+    "seed": 3,
+    "state_limit": 5000,
+    "use_lower_bound": true,
+    "seconds": 0.00016019799977584626,
+    "status": "optimal",
+    "termination": "frontier_bound",
+    "expanded": 3,
+    "discovered": 7,
+    "incumbent": [
+      3,
+      3,
+      21
+    ],
+    "lower_bound": [
+      3,
+      3,
+      21
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        4,
+        4,
+        20
+      ],
+      "proven_optimum": [
+        3,
+        3,
+        21
+      ],
+      "reference_is_optimal": false,
+      "lexicographic_excess": {
+        "coordinate": "messages",
+        "absolute": 1,
+        "relative": 0.25,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        1,
+        1,
+        -1
+      ]
+    }
+  },
+  {
+    "n_agents": 3,
+    "n_tokens": 2,
+    "seed": 4,
+    "state_limit": 5000,
+    "use_lower_bound": false,
+    "seconds": 0.0007515560000683763,
+    "status": "optimal",
+    "termination": "exhausted",
+    "expanded": 24,
+    "discovered": 24,
+    "incumbent": [
+      3,
+      3,
+      30
+    ],
+    "lower_bound": [
+      3,
+      3,
+      30
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        3,
+        3,
+        30
+      ],
+      "proven_optimum": [
+        3,
+        3,
+        30
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 3,
+    "n_tokens": 2,
+    "seed": 4,
+    "state_limit": 5000,
+    "use_lower_bound": true,
+    "seconds": 0.00011983000013060519,
+    "status": "optimal",
+    "termination": "exhausted",
+    "expanded": 3,
+    "discovered": 3,
+    "incumbent": [
+      3,
+      3,
+      30
+    ],
+    "lower_bound": [
+      3,
+      3,
+      30
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        3,
+        3,
+        30
+      ],
+      "proven_optimum": [
+        3,
+        3,
+        30
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 3,
+    "n_tokens": 3,
+    "seed": 0,
+    "state_limit": 5000,
+    "use_lower_bound": false,
+    "seconds": 0.0008636590000605793,
+    "status": "optimal",
+    "termination": "frontier_bound",
+    "expanded": 36,
+    "discovered": 37,
+    "incumbent": [
+      3,
+      3,
+      10
+    ],
+    "lower_bound": [
+      3,
+      3,
+      10
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        4,
+        4,
+        10
+      ],
+      "proven_optimum": [
+        3,
+        3,
+        10
+      ],
+      "reference_is_optimal": false,
+      "lexicographic_excess": {
+        "coordinate": "messages",
+        "absolute": 1,
+        "relative": 0.25,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        1,
+        1,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 3,
+    "n_tokens": 3,
+    "seed": 0,
+    "state_limit": 5000,
+    "use_lower_bound": true,
+    "seconds": 0.0002351349999116792,
+    "status": "optimal",
+    "termination": "frontier_bound",
+    "expanded": 6,
+    "discovered": 7,
+    "incumbent": [
+      3,
+      3,
+      10
+    ],
+    "lower_bound": [
+      3,
+      3,
+      10
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        4,
+        4,
+        10
+      ],
+      "proven_optimum": [
+        3,
+        3,
+        10
+      ],
+      "reference_is_optimal": false,
+      "lexicographic_excess": {
+        "coordinate": "messages",
+        "absolute": 1,
+        "relative": 0.25,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        1,
+        1,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 3,
+    "n_tokens": 3,
+    "seed": 1,
+    "state_limit": 5000,
+    "use_lower_bound": false,
+    "seconds": 0.00014379899994310108,
+    "status": "optimal",
+    "termination": "exhausted",
+    "expanded": 4,
+    "discovered": 4,
+    "incumbent": [
+      2,
+      2,
+      12
+    ],
+    "lower_bound": [
+      2,
+      2,
+      12
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        2,
+        2,
+        12
+      ],
+      "proven_optimum": [
+        2,
+        2,
+        12
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 3,
+    "n_tokens": 3,
+    "seed": 1,
+    "state_limit": 5000,
+    "use_lower_bound": true,
+    "seconds": 6.906600037837052e-05,
+    "status": "optimal",
+    "termination": "frontier_bound",
+    "expanded": 0,
+    "discovered": 1,
+    "incumbent": [
+      2,
+      2,
+      12
+    ],
+    "lower_bound": [
+      2,
+      2,
+      12
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        2,
+        2,
+        12
+      ],
+      "proven_optimum": [
+        2,
+        2,
+        12
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 3,
+    "n_tokens": 3,
+    "seed": 2,
+    "state_limit": 5000,
+    "use_lower_bound": false,
+    "seconds": 0.0018599360000735032,
+    "status": "optimal",
+    "termination": "exhausted",
+    "expanded": 146,
+    "discovered": 146,
+    "incumbent": [
+      5,
+      5,
+      18
+    ],
+    "lower_bound": [
+      5,
+      5,
+      18
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        5,
+        5,
+        18
+      ],
+      "proven_optimum": [
+        5,
+        5,
+        18
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 3,
+    "n_tokens": 3,
+    "seed": 2,
+    "state_limit": 5000,
+    "use_lower_bound": true,
+    "seconds": 0.00018622500010678777,
+    "status": "optimal",
+    "termination": "exhausted",
+    "expanded": 7,
+    "discovered": 7,
+    "incumbent": [
+      5,
+      5,
+      18
+    ],
+    "lower_bound": [
+      5,
+      5,
+      18
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        5,
+        5,
+        18
+      ],
+      "proven_optimum": [
+        5,
+        5,
+        18
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 3,
+    "n_tokens": 3,
+    "seed": 3,
+    "state_limit": 5000,
+    "use_lower_bound": false,
+    "seconds": 0.016192448000310833,
+    "status": "optimal",
+    "termination": "exhausted",
+    "expanded": 979,
+    "discovered": 979,
+    "incumbent": [
+      6,
+      6,
+      30
+    ],
+    "lower_bound": [
+      6,
+      6,
+      30
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        6,
+        6,
+        30
+      ],
+      "proven_optimum": [
+        6,
+        6,
+        30
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 3,
+    "n_tokens": 3,
+    "seed": 3,
+    "state_limit": 5000,
+    "use_lower_bound": true,
+    "seconds": 0.00011635300006673788,
+    "status": "optimal",
+    "termination": "frontier_bound",
+    "expanded": 0,
+    "discovered": 1,
+    "incumbent": [
+      6,
+      6,
+      30
+    ],
+    "lower_bound": [
+      6,
+      6,
+      30
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        6,
+        6,
+        30
+      ],
+      "proven_optimum": [
+        6,
+        6,
+        30
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 3,
+    "n_tokens": 3,
+    "seed": 4,
+    "state_limit": 5000,
+    "use_lower_bound": false,
+    "seconds": 0.004465797000193561,
+    "status": "optimal",
+    "termination": "exhausted",
+    "expanded": 303,
+    "discovered": 303,
+    "incumbent": [
+      5,
+      5,
+      47
+    ],
+    "lower_bound": [
+      5,
+      5,
+      47
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        5,
+        5,
+        47
+      ],
+      "proven_optimum": [
+        5,
+        5,
+        47
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 3,
+    "n_tokens": 3,
+    "seed": 4,
+    "state_limit": 5000,
+    "use_lower_bound": true,
+    "seconds": 0.00015589300028295838,
+    "status": "optimal",
+    "termination": "frontier_bound",
+    "expanded": 0,
+    "discovered": 1,
+    "incumbent": [
+      5,
+      5,
+      47
+    ],
+    "lower_bound": [
+      5,
+      5,
+      47
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        5,
+        5,
+        47
+      ],
+      "proven_optimum": [
+        5,
+        5,
+        47
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 4,
+    "n_tokens": 3,
+    "seed": 0,
+    "state_limit": 5000,
+    "use_lower_bound": false,
+    "seconds": 0.052331546999994316,
+    "status": "optimal",
+    "termination": "exhausted",
+    "expanded": 2132,
+    "discovered": 2132,
+    "incumbent": [
+      7,
+      7,
+      28
+    ],
+    "lower_bound": [
+      7,
+      7,
+      28
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        7,
+        7,
+        28
+      ],
+      "proven_optimum": [
+        7,
+        7,
+        28
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 4,
+    "n_tokens": 3,
+    "seed": 0,
+    "state_limit": 5000,
+    "use_lower_bound": true,
+    "seconds": 0.0008264600000984501,
+    "status": "optimal",
+    "termination": "exhausted",
+    "expanded": 36,
+    "discovered": 36,
+    "incumbent": [
+      7,
+      7,
+      28
+    ],
+    "lower_bound": [
+      7,
+      7,
+      28
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        7,
+        7,
+        28
+      ],
+      "proven_optimum": [
+        7,
+        7,
+        28
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 4,
+    "n_tokens": 3,
+    "seed": 1,
+    "state_limit": 5000,
+    "use_lower_bound": false,
+    "seconds": 0.05013501900020856,
+    "status": "optimal",
+    "termination": "frontier_bound",
+    "expanded": 3161,
+    "discovered": 3223,
+    "incumbent": [
+      7,
+      7,
+      36
+    ],
+    "lower_bound": [
+      7,
+      7,
+      36
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        8,
+        8,
+        23
+      ],
+      "proven_optimum": [
+        7,
+        7,
+        36
+      ],
+      "reference_is_optimal": false,
+      "lexicographic_excess": {
+        "coordinate": "messages",
+        "absolute": 1,
+        "relative": 0.125,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        1,
+        1,
+        -13
+      ]
+    }
+  },
+  {
+    "n_agents": 4,
+    "n_tokens": 3,
+    "seed": 1,
+    "state_limit": 5000,
+    "use_lower_bound": true,
+    "seconds": 0.007459756000116613,
+    "status": "optimal",
+    "termination": "frontier_bound",
+    "expanded": 343,
+    "discovered": 447,
+    "incumbent": [
+      7,
+      7,
+      36
+    ],
+    "lower_bound": [
+      7,
+      7,
+      36
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        8,
+        8,
+        23
+      ],
+      "proven_optimum": [
+        7,
+        7,
+        36
+      ],
+      "reference_is_optimal": false,
+      "lexicographic_excess": {
+        "coordinate": "messages",
+        "absolute": 1,
+        "relative": 0.125,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        1,
+        1,
+        -13
+      ]
+    }
+  },
+  {
+    "n_agents": 4,
+    "n_tokens": 3,
+    "seed": 2,
+    "state_limit": 5000,
+    "use_lower_bound": false,
+    "seconds": 0.0006717699998262106,
+    "status": "optimal",
+    "termination": "exhausted",
+    "expanded": 51,
+    "discovered": 51,
+    "incumbent": [
+      4,
+      4,
+      18
+    ],
+    "lower_bound": [
+      4,
+      4,
+      18
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        4,
+        4,
+        18
+      ],
+      "proven_optimum": [
+        4,
+        4,
+        18
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 4,
+    "n_tokens": 3,
+    "seed": 2,
+    "state_limit": 5000,
+    "use_lower_bound": true,
+    "seconds": 0.0004816110003957874,
+    "status": "optimal",
+    "termination": "exhausted",
+    "expanded": 4,
+    "discovered": 4,
+    "incumbent": [
+      4,
+      4,
+      18
+    ],
+    "lower_bound": [
+      4,
+      4,
+      18
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        4,
+        4,
+        18
+      ],
+      "proven_optimum": [
+        4,
+        4,
+        18
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 4,
+    "n_tokens": 3,
+    "seed": 3,
+    "state_limit": 5000,
+    "use_lower_bound": false,
+    "seconds": 0.054464784000174404,
+    "status": "optimal",
+    "termination": "frontier_bound",
+    "expanded": 2776,
+    "discovered": 3132,
+    "incumbent": [
+      7,
+      7,
+      24
+    ],
+    "lower_bound": [
+      7,
+      7,
+      24
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        8,
+        8,
+        23
+      ],
+      "proven_optimum": [
+        7,
+        7,
+        24
+      ],
+      "reference_is_optimal": false,
+      "lexicographic_excess": {
+        "coordinate": "messages",
+        "absolute": 1,
+        "relative": 0.125,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        1,
+        1,
+        -1
+      ]
+    }
+  },
+  {
+    "n_agents": 4,
+    "n_tokens": 3,
+    "seed": 3,
+    "state_limit": 5000,
+    "use_lower_bound": true,
+    "seconds": 0.005910691000281076,
+    "status": "optimal",
+    "termination": "frontier_bound",
+    "expanded": 137,
+    "discovered": 246,
+    "incumbent": [
+      7,
+      7,
+      24
+    ],
+    "lower_bound": [
+      7,
+      7,
+      24
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        8,
+        8,
+        23
+      ],
+      "proven_optimum": [
+        7,
+        7,
+        24
+      ],
+      "reference_is_optimal": false,
+      "lexicographic_excess": {
+        "coordinate": "messages",
+        "absolute": 1,
+        "relative": 0.125,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        1,
+        1,
+        -1
+      ]
+    }
+  },
+  {
+    "n_agents": 4,
+    "n_tokens": 3,
+    "seed": 4,
+    "state_limit": 5000,
+    "use_lower_bound": false,
+    "seconds": 0.013885463999940839,
+    "status": "optimal",
+    "termination": "exhausted",
+    "expanded": 977,
+    "discovered": 977,
+    "incumbent": [
+      6,
+      6,
+      38
+    ],
+    "lower_bound": [
+      6,
+      6,
+      38
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        6,
+        6,
+        38
+      ],
+      "proven_optimum": [
+        6,
+        6,
+        38
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 4,
+    "n_tokens": 3,
+    "seed": 4,
+    "state_limit": 5000,
+    "use_lower_bound": true,
+    "seconds": 0.0018007339999712713,
+    "status": "optimal",
+    "termination": "exhausted",
+    "expanded": 75,
+    "discovered": 75,
+    "incumbent": [
+      6,
+      6,
+      38
+    ],
+    "lower_bound": [
+      6,
+      6,
+      38
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        6,
+        6,
+        38
+      ],
+      "proven_optimum": [
+        6,
+        6,
+        38
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 4,
+    "n_tokens": 4,
+    "seed": 0,
+    "state_limit": 5000,
+    "use_lower_bound": false,
+    "seconds": 0.04766440100002001,
+    "status": "feasible",
+    "termination": "label_limit",
+    "expanded": 1541,
+    "discovered": 5000,
+    "incumbent": [
+      8,
+      8,
+      32
+    ],
+    "lower_bound": [
+      5,
+      5,
+      22
+    ],
+    "gap": {
+      "coordinate": "messages",
+      "absolute": 3,
+      "relative": 0.375,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        8,
+        8,
+        32
+      ],
+      "proven_optimum": null,
+      "reference_is_optimal": null,
+      "lexicographic_excess": null,
+      "component_differences": null
+    }
+  },
+  {
+    "n_agents": 4,
+    "n_tokens": 4,
+    "seed": 0,
+    "state_limit": 5000,
+    "use_lower_bound": true,
+    "seconds": 0.0018940549998660572,
+    "status": "optimal",
+    "termination": "frontier_bound",
+    "expanded": 59,
+    "discovered": 122,
+    "incumbent": [
+      7,
+      7,
+      40
+    ],
+    "lower_bound": [
+      7,
+      7,
+      40
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        8,
+        8,
+        32
+      ],
+      "proven_optimum": [
+        7,
+        7,
+        40
+      ],
+      "reference_is_optimal": false,
+      "lexicographic_excess": {
+        "coordinate": "messages",
+        "absolute": 1,
+        "relative": 0.125,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        1,
+        1,
+        -8
+      ]
+    }
+  },
+  {
+    "n_agents": 4,
+    "n_tokens": 4,
+    "seed": 1,
+    "state_limit": 5000,
+    "use_lower_bound": false,
+    "seconds": 0.09026105800012374,
+    "status": "feasible",
+    "termination": "label_limit",
+    "expanded": 1862,
+    "discovered": 5000,
+    "incumbent": [
+      7,
+      7,
+      20
+    ],
+    "lower_bound": [
+      5,
+      5,
+      19
+    ],
+    "gap": {
+      "coordinate": "messages",
+      "absolute": 2,
+      "relative": 0.2857142857142857,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        7,
+        7,
+        20
+      ],
+      "proven_optimum": null,
+      "reference_is_optimal": null,
+      "lexicographic_excess": null,
+      "component_differences": null
+    }
+  },
+  {
+    "n_agents": 4,
+    "n_tokens": 4,
+    "seed": 1,
+    "state_limit": 5000,
+    "use_lower_bound": true,
+    "seconds": 0.004657368000152928,
+    "status": "optimal",
+    "termination": "exhausted",
+    "expanded": 80,
+    "discovered": 80,
+    "incumbent": [
+      7,
+      7,
+      20
+    ],
+    "lower_bound": [
+      7,
+      7,
+      20
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        7,
+        7,
+        20
+      ],
+      "proven_optimum": [
+        7,
+        7,
+        20
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 4,
+    "n_tokens": 4,
+    "seed": 2,
+    "state_limit": 5000,
+    "use_lower_bound": false,
+    "seconds": 0.041432266999891,
+    "status": "optimal",
+    "termination": "exhausted",
+    "expanded": 2027,
+    "discovered": 2027,
+    "incumbent": [
+      5,
+      5,
+      26
+    ],
+    "lower_bound": [
+      5,
+      5,
+      26
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        5,
+        5,
+        26
+      ],
+      "proven_optimum": [
+        5,
+        5,
+        26
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 4,
+    "n_tokens": 4,
+    "seed": 2,
+    "state_limit": 5000,
+    "use_lower_bound": true,
+    "seconds": 0.0005983040000501205,
+    "status": "optimal",
+    "termination": "exhausted",
+    "expanded": 22,
+    "discovered": 22,
+    "incumbent": [
+      5,
+      5,
+      26
+    ],
+    "lower_bound": [
+      5,
+      5,
+      26
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        5,
+        5,
+        26
+      ],
+      "proven_optimum": [
+        5,
+        5,
+        26
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 4,
+    "n_tokens": 4,
+    "seed": 3,
+    "state_limit": 5000,
+    "use_lower_bound": false,
+    "seconds": 0.023779246999765746,
+    "status": "optimal",
+    "termination": "exhausted",
+    "expanded": 1101,
+    "discovered": 1101,
+    "incumbent": [
+      6,
+      6,
+      13
+    ],
+    "lower_bound": [
+      6,
+      6,
+      13
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        6,
+        6,
+        13
+      ],
+      "proven_optimum": [
+        6,
+        6,
+        13
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 4,
+    "n_tokens": 4,
+    "seed": 3,
+    "state_limit": 5000,
+    "use_lower_bound": true,
+    "seconds": 0.0026861199999075325,
+    "status": "optimal",
+    "termination": "exhausted",
+    "expanded": 117,
+    "discovered": 117,
+    "incumbent": [
+      6,
+      6,
+      13
+    ],
+    "lower_bound": [
+      6,
+      6,
+      13
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        6,
+        6,
+        13
+      ],
+      "proven_optimum": [
+        6,
+        6,
+        13
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 4,
+    "n_tokens": 4,
+    "seed": 4,
+    "state_limit": 5000,
+    "use_lower_bound": false,
+    "seconds": 0.0033005899999807298,
+    "status": "optimal",
+    "termination": "exhausted",
+    "expanded": 234,
+    "discovered": 234,
+    "incumbent": [
+      5,
+      5,
+      23
+    ],
+    "lower_bound": [
+      5,
+      5,
+      23
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        5,
+        5,
+        23
+      ],
+      "proven_optimum": [
+        5,
+        5,
+        23
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 4,
+    "n_tokens": 4,
+    "seed": 4,
+    "state_limit": 5000,
+    "use_lower_bound": true,
+    "seconds": 0.0005394889999479346,
+    "status": "optimal",
+    "termination": "exhausted",
+    "expanded": 20,
+    "discovered": 20,
+    "incumbent": [
+      5,
+      5,
+      23
+    ],
+    "lower_bound": [
+      5,
+      5,
+      23
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        5,
+        5,
+        23
+      ],
+      "proven_optimum": [
+        5,
+        5,
+        23
+      ],
+      "reference_is_optimal": true,
+      "lexicographic_excess": {
+        "coordinate": null,
+        "absolute": 0,
+        "relative": 0.0,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "n_agents": 6,
+    "n_tokens": 12,
+    "seed": 0,
+    "state_limit": 5000,
+    "use_lower_bound": false,
+    "seconds": 0.04594772400014335,
+    "status": "feasible",
+    "termination": "label_limit",
+    "expanded": 233,
+    "discovered": 5000,
+    "incumbent": [
+      23,
+      23,
+      45
+    ],
+    "lower_bound": [
+      2,
+      2,
+      5
+    ],
+    "gap": {
+      "coordinate": "messages",
+      "absolute": 21,
+      "relative": 0.9130434782608695,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        23,
+        23,
+        45
+      ],
+      "proven_optimum": null,
+      "reference_is_optimal": null,
+      "lexicographic_excess": null,
+      "component_differences": null
+    }
+  },
+  {
+    "n_agents": 6,
+    "n_tokens": 12,
+    "seed": 0,
+    "state_limit": 5000,
+    "use_lower_bound": true,
+    "seconds": 0.06947719099980532,
+    "status": "feasible",
+    "termination": "label_limit",
+    "expanded": 144,
+    "discovered": 5000,
+    "incumbent": [
+      23,
+      23,
+      45
+    ],
+    "lower_bound": [
+      11,
+      11,
+      38
+    ],
+    "gap": {
+      "coordinate": "messages",
+      "absolute": 12,
+      "relative": 0.5217391304347826,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        23,
+        23,
+        45
+      ],
+      "proven_optimum": null,
+      "reference_is_optimal": null,
+      "lexicographic_excess": null,
+      "component_differences": null
+    }
+  },
+  {
+    "n_agents": 6,
+    "n_tokens": 12,
+    "seed": 1,
+    "state_limit": 5000,
+    "use_lower_bound": false,
+    "seconds": 0.0349306200000683,
+    "status": "feasible",
+    "termination": "label_limit",
+    "expanded": 237,
+    "discovered": 5000,
+    "incumbent": [
+      10,
+      10,
+      26
+    ],
+    "lower_bound": [
+      2,
+      2,
+      6
+    ],
+    "gap": {
+      "coordinate": "messages",
+      "absolute": 8,
+      "relative": 0.8,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        10,
+        10,
+        26
+      ],
+      "proven_optimum": null,
+      "reference_is_optimal": null,
+      "lexicographic_excess": null,
+      "component_differences": null
+    }
+  },
+  {
+    "n_agents": 6,
+    "n_tokens": 12,
+    "seed": 1,
+    "state_limit": 5000,
+    "use_lower_bound": true,
+    "seconds": 0.2256401059999007,
+    "status": "optimal",
+    "termination": "frontier_bound",
+    "expanded": 1617,
+    "discovered": 3888,
+    "incumbent": [
+      9,
+      9,
+      29
+    ],
+    "lower_bound": [
+      9,
+      9,
+      29
+    ],
+    "gap": {
+      "coordinate": null,
+      "absolute": 0,
+      "relative": 0.0,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        10,
+        10,
+        26
+      ],
+      "proven_optimum": [
+        9,
+        9,
+        29
+      ],
+      "reference_is_optimal": false,
+      "lexicographic_excess": {
+        "coordinate": "messages",
+        "absolute": 1,
+        "relative": 0.1,
+        "earlier_coordinates_equal": true
+      },
+      "component_differences": [
+        1,
+        1,
+        -3
+      ]
+    }
+  },
+  {
+    "n_agents": 6,
+    "n_tokens": 12,
+    "seed": 2,
+    "state_limit": 5000,
+    "use_lower_bound": false,
+    "seconds": 0.04362984499994127,
+    "status": "feasible",
+    "termination": "label_limit",
+    "expanded": 124,
+    "discovered": 5000,
+    "incumbent": [
+      15,
+      15,
+      57
+    ],
+    "lower_bound": [
+      2,
+      2,
+      5
+    ],
+    "gap": {
+      "coordinate": "messages",
+      "absolute": 13,
+      "relative": 0.8666666666666667,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        15,
+        15,
+        57
+      ],
+      "proven_optimum": null,
+      "reference_is_optimal": null,
+      "lexicographic_excess": null,
+      "component_differences": null
+    }
+  },
+  {
+    "n_agents": 6,
+    "n_tokens": 12,
+    "seed": 2,
+    "state_limit": 5000,
+    "use_lower_bound": true,
+    "seconds": 0.04383914900017771,
+    "status": "feasible",
+    "termination": "label_limit",
+    "expanded": 103,
+    "discovered": 5000,
+    "incumbent": [
+      15,
+      15,
+      57
+    ],
+    "lower_bound": [
+      12,
+      12,
+      43
+    ],
+    "gap": {
+      "coordinate": "messages",
+      "absolute": 3,
+      "relative": 0.2,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        15,
+        15,
+        57
+      ],
+      "proven_optimum": null,
+      "reference_is_optimal": null,
+      "lexicographic_excess": null,
+      "component_differences": null
+    }
+  },
+  {
+    "n_agents": 6,
+    "n_tokens": 12,
+    "seed": 3,
+    "state_limit": 5000,
+    "use_lower_bound": false,
+    "seconds": 0.030237404000217794,
+    "status": "feasible",
+    "termination": "label_limit",
+    "expanded": 163,
+    "discovered": 5000,
+    "incumbent": [
+      14,
+      14,
+      36
+    ],
+    "lower_bound": [
+      2,
+      2,
+      4
+    ],
+    "gap": {
+      "coordinate": "messages",
+      "absolute": 12,
+      "relative": 0.8571428571428571,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        14,
+        14,
+        36
+      ],
+      "proven_optimum": null,
+      "reference_is_optimal": null,
+      "lexicographic_excess": null,
+      "component_differences": null
+    }
+  },
+  {
+    "n_agents": 6,
+    "n_tokens": 12,
+    "seed": 3,
+    "state_limit": 5000,
+    "use_lower_bound": true,
+    "seconds": 0.0580453130000933,
+    "status": "feasible",
+    "termination": "label_limit",
+    "expanded": 123,
+    "discovered": 5000,
+    "incumbent": [
+      14,
+      14,
+      36
+    ],
+    "lower_bound": [
+      10,
+      10,
+      27
+    ],
+    "gap": {
+      "coordinate": "messages",
+      "absolute": 4,
+      "relative": 0.2857142857142857,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        14,
+        14,
+        36
+      ],
+      "proven_optimum": null,
+      "reference_is_optimal": null,
+      "lexicographic_excess": null,
+      "component_differences": null
+    }
+  },
+  {
+    "n_agents": 6,
+    "n_tokens": 12,
+    "seed": 4,
+    "state_limit": 5000,
+    "use_lower_bound": false,
+    "seconds": 0.033944134000194026,
+    "status": "feasible",
+    "termination": "label_limit",
+    "expanded": 226,
+    "discovered": 5000,
+    "incumbent": [
+      10,
+      10,
+      62
+    ],
+    "lower_bound": [
+      2,
+      2,
+      12
+    ],
+    "gap": {
+      "coordinate": "messages",
+      "absolute": 8,
+      "relative": 0.8,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        10,
+        10,
+        62
+      ],
+      "proven_optimum": null,
+      "reference_is_optimal": null,
+      "lexicographic_excess": null,
+      "component_differences": null
+    }
+  },
+  {
+    "n_agents": 6,
+    "n_tokens": 12,
+    "seed": 4,
+    "state_limit": 5000,
+    "use_lower_bound": true,
+    "seconds": 0.19948687300029633,
+    "status": "feasible",
+    "termination": "label_limit",
+    "expanded": 1043,
+    "discovered": 5000,
+    "incumbent": [
+      10,
+      10,
+      62
+    ],
+    "lower_bound": [
+      10,
+      10,
+      46
+    ],
+    "gap": {
+      "coordinate": "gross_payments",
+      "absolute": 16,
+      "relative": 0.25806451612903225,
+      "earlier_coordinates_equal": true
+    },
+    "quality": {
+      "reference_objective": [
+        10,
+        10,
+        62
+      ],
+      "proven_optimum": null,
+      "reference_is_optimal": null,
+      "lexicographic_excess": null,
+      "component_differences": null
+    }
+  }
+]

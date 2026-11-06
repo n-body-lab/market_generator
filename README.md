@@ -80,6 +80,26 @@ and initially satisfied requirements. Different target path lengths are sampled
 within each market. No demand count or difficulty label guarantees a realised
 metric.
 
+Generation accepts measured constraints, for example:
+
+```python
+config = MarketConfig(
+    target_indirect_dependency_fraction=0.5,  # minimum cheapest-payment indirect fraction
+    structural_constraints={"shared_demand_fraction": (0.5, 1.0)},
+    generation_attempt_limit=100,
+    price_modifications=3,
+    seed=42,
+)
+result = generate_market(config)  # raises GenerationFailure on exhausted attempts
+print(result.metadata["requested_properties"])
+print(result.metadata["realised_properties"])
+assert result.metadata["constraints_satisfied"]
+```
+
+See [constraint definitions](docs/controllability.md): cheapest-payment routing
+is distinct from the globally optimal lexicographic schedule. Direct trades remain
+possible. Successful generation never silently relaxes requested intervals.
+
 Candidate walks retain a configurable number of cheap alternatives up to
 `max_candidate_depth` edges. Full token journeys have no such depth cap.
 Independent token walks minimise gross payments ignoring credit constraints
@@ -115,12 +135,19 @@ finite. Costs are compared exactly; there are no numerical tolerances.
 - `infeasible`: exhaustive search proves no complete schedule for those budgets.
 - `limit_reached`: no proof; `best_solution` is a verified incumbent if available.
 - Generation's `not_run`: market exceeds configured automatic-search dimensions
-  (defaults: three agents and three tokens), or exact search is disabled.
+  (defaults: six agents and twelve tokens), or exact search is disabled.
+
+The canonical `result.status` is `optimal` or `feasible` for generated markets.
+`solve_exact(...).conclusion` is one of `optimal`, `feasible`, `infeasible`, `unknown`.
+The older status fields above remain available as search termination metadata.
+Search exports a lower bound, incumbent, and first-unresolved-coordinate gap;
+`metadata["reference_quality"]` compares references with proven optima. See
+[solver benchmarks](docs/optimality_benchmarks.md).
 
 Feasibility and optimality are separate. `optimal_solution` is populated only
 with proof; `best_solution` includes the feasible reference when proof is absent.
-Search caps both expanded states and discovered labels; neither a time guarantee
-nor efficient scaling is promised. Large credit balances can enlarge the search
+Search caps both expanded states and discovered labels; an optional
+`time_limit_seconds` also limits search. Efficient scaling is not promised. Large credit balances can enlarge the search
 space substantially, even for few tokens. The cap can conservatively interrupt
 before completing a proof. Baseline zero-length complete tasks are optimal too.
 No theorem about unknown future communication protocols is implied.
@@ -147,6 +174,32 @@ first transfer, classifies its continuation as feasible, impossible or unclassif
 and reports objective differences when both optima are proven. It also tests one
 credit of exploratory expenditure per funded agent. It can be expensive; it is
 not run during ordinary generation.
+
+`decision_fragility` is the exact fraction of affordable transfers that destroy
+completion feasibility. It is null if any action remains unclassified; no-action
+states are reported separately. See [economic families](docs/decision_fragility.md).
+The reproducible examples `economic_family("robust"|"fragile"|"highly_constrained")`
+prove fragility 0, 1/2 and 5/6 without modelling agent behaviour.
+
+## Research validation
+
+[Difficulty validation](docs/difficulty_validation.md) reports 100-seed studies of
+preset distributions, routing depth, paired budget leeway, ownership/overlap, and
+reference versus proven optima, including negative and unresolved outcomes.
+
+```sh
+python experiments/characterise.py --seeds 100
+python experiments/benchmark_solver.py --seeds 5 --state-limit 5000
+python examples/research_markets.py
+```
+
+The characterisation exports compressed raw JSON and a JSON distribution summary
+in `experiments/data/`; committed measurements and [example exports](examples/markets)
+are included. Timings vary across machines. Full-market structural metrics and
+exact feasibility are generator-side observations. Actual discovery messages,
+what agents know over time, negotiation and learned behaviour require downstream
+communication traces and are not measured here. Execution and exploratory message
+costs stay separate; the default objective still has messages equal to transfers.
 
 ## Reproducible experiments
 

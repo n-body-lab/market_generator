@@ -110,8 +110,71 @@ def analyse_fragility(market: Market, state: State, state_limit: int = 5000) -> 
             outcome = solve_exact(market, depleted, state_limit)
             sensitivity.append({'sender': sender, 'credits_consumed': 1, 'status': outcome.status,
                                 'best_objective': outcome.best_solution.objective if outcome.best_solution else None})
-    return {'baseline_status': baseline.status, 'affordable_actions': len(actions),
+    destructive = sum(a['preserves_feasibility'] is False for a in actions)
+    unknown = sum(a['preserves_feasibility'] is None for a in actions)
+    total = len(actions)
+    fragility = destructive / total if total and not unknown else None
+    return {'decision_fragility': fragility,
+            'fragility_status': 'no_affordable_actions' if not total else ('unavailable_search_limit' if unknown else 'exact'),
+            'fragility_bounds': (destructive / total, (destructive + unknown) / total) if total else None,
+            'communication_affordability': {
+                'agents_affording_one_message': sum(b >= 1 for b in state.balances),
+                'total_credits': sum(state.balances)},
+            'baseline_status': baseline.status, 'affordable_actions': len(actions),
             'preserving_actions': sum(a['preserves_feasibility'] is True for a in actions),
             'destructive_actions': sum(a['preserves_feasibility'] is False for a in actions),
             'unclassified_actions': sum(a['preserves_feasibility'] is None for a in actions),
             'actions': actions, 'one_credit_expenditure_sensitivity': sensitivity}
+
+
+def count_feasible_sequences(market: Market, state: State, max_transactions: int,
+                             node_limit: int = 100000) -> dict:
+    """Enumerate action sequences completing for the first time within a horizon.
+
+    Distinct token transfers count as distinct sequences. Completion stops a path;
+    no claim about all arbitrary-length schedules is made. A cap returns only a
+    lower bound, never an exact count. Cycles are permitted within the horizon.
+    """
+    if max_transactions < 0 or node_limit < 0:
+        raise ValueError('negative enumeration bound')
+    stack = [(state, 0)]
+    visited = winners = 0
+    while stack:
+        if visited >= node_limit:
+            return {'count': None, 'lower_bound': winners, 'status': 'limit_reached',
+                    'horizon': max_transactions, 'visited_nodes': visited}
+        current, depth = stack.pop()
+        visited += 1
+        if complete(market, current):
+            winners += 1
+        elif depth < max_transactions:
+            for t, seller in enumerate(current.owners):
+                for buyer in range(market.n_agents):
+                    if buyer == seller:
+                        continue
+                    try:
+                        stack.append((execute(market, current, Transfer(t, seller, buyer)), depth + 1))
+                    except ValueError:
+                        pass
+    return {'count': winners, 'lower_bound': winners, 'status': 'exhausted_horizon',
+            'horizon': max_transactions, 'visited_nodes': visited}
+
+
+def financing_dependence(result: 'GenerationResult') -> dict:
+    """Reference purchases unaffordable from initial balance minus earlier spending.
+
+    Counterfactual removes ALL prior sale receipts, retaining actual spending.
+    This is schedule dependence, not a claim no alternative schedule exists.
+    """
+    m = result.market
+    spending = [0] * m.n_agents
+    dependent = []
+    for index, a in enumerate(result.reference_solution.actions):
+        mb, ms = m.communication.counts(a.token, a.seller, a.buyer)
+        amount = m.prices[a.buyer][a.seller] + mb
+        if result.initial_state.balances[a.buyer] - spending[a.buyer] < amount:
+            dependent.append(index)
+        spending[a.buyer] += amount
+        spending[a.seller] += ms
+    return {'purchases_requiring_prior_sale_receipts': len(dependent), 'action_indices': dependent,
+            'definition': 'Remove previous receipts, retaining spending, in the fixed reference schedule.'}

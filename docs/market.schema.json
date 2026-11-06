@@ -318,6 +318,14 @@
             "object",
             "null"
           ]
+        },
+        "status": {
+          "enum": [
+            "optimal",
+            "feasible",
+            "infeasible",
+            "unknown"
+          ]
         }
       },
       "required": [
