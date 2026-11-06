@@ -6,7 +6,7 @@ from .models import ExecutionMessages, Market, State, initial_state
 from .prices import generate_prices, modify_prices
 from .tasks import generate_tasks
 from .routing import candidate_routes
-from .validation import validate_market
+from .validation import validate_market, audit_solution
 from .credits import reference_budgets, add_leeway
 from .scheduling import Solution, reference_schedule, verify_solution
 
@@ -50,7 +50,22 @@ def generate_market(config: MarketConfig) -> GenerationResult:
     required = reference_budgets(market, solution.actions)
     initial = initial_state(market, add_leeway(required, config.budget_leeway, config.leeway_mode))
     verify_solution(market, initial, solution)
-    return GenerationResult(market, initial, solution, required, routes, candidates, config, config.seed,
+    audit_solution(market, initial, solution)
+    result = GenerationResult(market, initial, solution, required, routes, candidates, config, config.seed,
                             best_solution=solution,
                             metadata={'routing_objective': 'independent gross cost; exact per token up to 8 demanders',
                                       'execution_policy': 'fixed buyer/seller messages; no discovery-cost claim'})
+
+    if (market.n_agents <= config.exact_max_agents and market.n_tokens <= config.exact_max_tokens
+            and config.exact_state_limit > 0):
+        from .optimization import solve_exact
+        exact = solve_exact(market, initial, config.exact_state_limit, solution)
+        result = replace(result, optimality_status=exact.status,
+                         optimal_solution=exact.best_solution if exact.status == 'optimal' else None,
+                         best_solution=exact.best_solution,
+                         metadata=result.metadata | {'exact_search': {
+                             'expanded_states': exact.expanded_states, 'discovered_states': exact.discovered_states,
+                             'proof_scope': exact.proof_scope}})
+        if exact.best_solution is not None:
+            audit_solution(market, initial, exact.best_solution)
+    return result

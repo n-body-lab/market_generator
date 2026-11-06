@@ -46,3 +46,42 @@ def validate_state(market: Market, state: State) -> None:
         raise ValueError('history/events mismatch')
     if type(state.exploratory_messages) is not int or state.exploratory_messages < 0:
         raise ValueError('invalid exploratory messages')
+
+
+def audit_solution(market: Market, initial: State, solution: 'Solution') -> None:
+    """Independent arithmetic/ownership audit; does not call simulation.execute.
+
+    Validates a continuation from any structurally valid state, including historic
+    progress. Message balances are checked before incoming sale proceeds.
+    """
+    validate_state(market, initial)
+    balances = list(initial.balances)
+    owners = list(initial.owners)
+    seen = [set(p) for p in initial.progress]
+    gross = messages = 0
+    for a in solution.actions:
+        if (not 0 <= a.token < market.n_tokens or not 0 <= a.seller < market.n_agents
+                or not 0 <= a.buyer < market.n_agents or a.buyer == a.seller or owners[a.token] != a.seller):
+            raise ValueError('audit: invalid ownership')
+        price = market.prices[a.buyer][a.seller]
+        mb, ms = market.communication.counts(a.token, a.seller, a.buyer)
+        if balances[a.buyer] < price + mb or balances[a.seller] < ms:
+            raise ValueError('audit: insufficient credits')
+        balances[a.buyer] -= price + mb
+        balances[a.seller] += price - ms
+        owners[a.token] = a.buyer
+        if a.token in market.tasks[a.buyer]:
+            seen[a.buyer].add(a.token)
+        gross += price
+        messages += mb + ms
+    if any(not task <= progress for task, progress in zip(market.tasks, seen)):
+        raise ValueError('audit: unsatisfied tasks')
+    if solution.objective != (messages, len(solution.actions), gross):
+        raise ValueError('audit: objective mismatch')
+    if sum(balances) != sum(initial.balances) - messages:
+        raise ValueError('audit: accounting failure')
+
+
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from .scheduling import Solution
