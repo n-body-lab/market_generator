@@ -50,6 +50,17 @@ class Event:
 
 
 @dataclass(frozen=True)
+class CommunicationEvent:
+    """One exploratory message; cost is fixed at one credit by V0.1 semantics.
+
+    Interleave these records with transfer Events in an external ordered ledger.
+    State.events remains the existing transfer-only provenance log.
+    """
+    sender: int
+    recipient: int
+
+
+@dataclass(frozen=True)
 class State:
     owners: tuple[int, ...]
     balances: tuple[int, ...]

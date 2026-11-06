@@ -59,3 +59,106 @@ cover the five decoy counts, hand-verified balances/deadlock over five seeds,
 multiple unsatisfied agents, relevance of forwarding, completed requirements,
 empty relevant subsets and subset-specific unknown handling. Strict economic
 reconciliation and final integration regression results accompany the second fix.
+
+## Strict economic reconciliation
+
+`validate_economic_state(market, trusted_initial, final, ledger)` independently
+reconstructs every balance, owner, history, progress set and message counter. It
+does not call the simulator's execution/replay implementation. Intermediate
+pre-transfer affordability is checked, including seller messages **before** sale
+receipts. Trade payments conserve credits; execution and exploratory message
+fees consume them. Exact final per-agent balances must match reconstructed books.
+It also matches the supplied final transfer-event sequence, including any trusted
+prefix. Strict validation accepts incomplete runtime states as well as solutions.
+
+The existing `validate_state` and `decode_state` remain structural checks. A state
+snapshot alone cannot authenticate an endowment or reconstruct exploratory-message
+senders/order: provide a trusted initial/checkpoint state and all subsequent
+ledger records. `State.events` deliberately remains the transfer-only provenance
+log. Callers interleave its new `Event` records with `CommunicationEvent(sender,
+recipient)` records for one-credit exploratory messages. Execution messages are
+already included in transfer events and must not be double-recorded. The ordered
+ledger covers only the continuation after the trusted checkpoint; transfer
+sequence numbers continue the checkpoint's transfer count. Record actual message
+order in the integrating environment. `decode_ledger(loads(dumps(ledger)))` can
+round-trip the typed records without asserting their authenticity.
+
+`verify_solution` now runs strict reconciliation on reference and solver witness
+replays. Therefore generated solutions and typed result imports receive the
+stronger check without changing their public signatures or market format.
+
+### Tests and final regression
+
+The complete suite passes **105 tests**, preserving all previous 75. The 15
+ledger cases cover valid multi-token repeat visits, mixed exploratory/transfer
+ordering, artificial credit injection, wrong prices and seller payments,
+incorrect buyer/seller message charges, unexplained destruction, negative
+intermediate balances hidden by later receipts, seller prepayment, omitted and
+duplicated message records, altered ownership histories/counters and continuation
+anchors. Three additional interface cases check easy/medium/hard reproducibility,
+measured constraints, reference feasibility, canonical/legacy optimality status,
+complete JSON payloads and exact allowed local-observation fields.
+
+Relevant small experiments were reproduced; the expensive 100-seed benchmark
+suites were not rerun. Easy/medium/hard generation and all seven research exports
+pass typed import, JSON Schema validation and strict economic replay. Regenerated
+legacy economic exports retain their original full-space values and now include
+the complementary relevant-subset measurements. Python 3.12.14 was exercised;
+the declared Python 3.11 compatibility was not tested on another interpreter.
+Pytest's existing external AnyIO deprecation warning remains non-failing.
+
+## Import and use for a controlled pilot
+
+From the repository root:
+
+```sh
+python3 -m venv .venv
+. .venv/bin/activate
+python -m pip install -e '.[test]'
+python -m pytest -q
+```
+
+```python
+from hivemarket_generator import (
+    economic_family, CommunicationEvent, validate_economic_state,
+    dumps, loads, decode_result, decode_ledger, local_view,
+)
+from hivemarket_generator.simulation import execute, send_exploratory_message
+
+result = economic_family('goal_relevant_fragile', seed=42)
+restored = decode_result(loads(dumps(result)))
+market, anchor = restored.market, restored.initial_state
+state = execute(market, anchor, restored.reference_solution.actions[0])
+ledger = [state.events[-1]]
+state = send_exploratory_message(market, state, 0, 1)
+ledger.append(CommunicationEvent(0, 1))
+state = execute(market, state, restored.reference_solution.actions[1])
+ledger.append(state.events[-1])
+validate_economic_state(market, anchor, state, ledger)
+assert state.balances == (0, 2)
+validate_economic_state(market, anchor, state, decode_ledger(loads(dumps(ledger))))
+agent_payload = local_view(market, anchor, agent=0)
+```
+
+A regular `generate_market(MarketConfig(...))` result exports the full config,
+seed/metadata, owner array, tasks, prices, initial balances/progress, reference
+solution, honest optimisation status and difficulty measurements. Full exports
+and ledgers are generator-side data; give agents only their local views. Do not
+expose other inventories/tasks, the global matrix or benchmark schedules.
+
+## Limitations and integration-readiness verdict
+
+Ready for a **controlled integration pilot**, with both targeted fixes validated.
+No integration with the main repository is implemented. Ledger validation is a
+consistency proof relative to trusted starting balances and the supplied ordered
+records, not event authentication, signature verification or evidence of real
+external payments. Missing exploratory messages cannot be inferred from token
+provenance alone; callers must retain those records. Untrusted snapshots must not
+be accepted solely because structural validation passes.
+
+Goal relevance remains a full-information token-demand filter, not a model of
+local observations, communication or subjective plausibility. The two fragilities
+must be reported with their denominators/statuses. Existing integer-credit,
+fixed-message and capped-optimisation limitations remain; feasibility witnesses
+are not automatically globally optimal. No optimisation or market-mechanism
+expansion was needed.

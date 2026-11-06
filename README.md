@@ -246,3 +246,11 @@ inflate the first fraction while leaving the second zero. Neither measures actua
 agent difficulty. `economic_family("goal_relevant_fragile")` demonstrates a bad
 ordering of two goal-relevant purchases without decoys. See
 [final validation](docs/final_validation.md) for assumptions and reproducible evidence.
+
+For integration, use `validate_economic_state(market, trusted_initial, final, ledger)`
+to reconcile balances and provenance against an ordered continuation ledger.
+`validate_state` alone checks structure. Keep each transfer `Event` and each
+one-credit exploratory `CommunicationEvent(sender, recipient)` in actual order;
+execution-message charges are already in transfer events. Reference verification
+runs strict reconciliation automatically. The [final report](docs/final_validation.md)
+includes a tested import/replay example, trust assumptions and the pilot-readiness verdict.

@@ -2,7 +2,7 @@
 from dataclasses import asdict, is_dataclass
 import json
 from typing import Any
-from .models import Market, State, ExecutionMessages, Event, Transfer, initial_state
+from .models import Market, State, ExecutionMessages, Event, Transfer, initial_state, CommunicationEvent
 from .validation import validate_market, validate_state
 
 
@@ -124,3 +124,20 @@ def decode_result(data: dict[str, Any]) -> 'GenerationResult':
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from .generation import GenerationResult
+
+
+def decode_ledger(data: list[dict[str, Any]]) -> tuple[Event | CommunicationEvent, ...]:
+    """Decode an ordered continuation ledger; economic validation needs an anchor.
+
+    Transfer records have a `transfer` object; exploratory records have exactly
+    sender/recipient. This does not authenticate records or validate affordability.
+    """
+    records: list[Event | CommunicationEvent] = []
+    for raw in data:
+        if 'transfer' in raw:
+            fields = dict(raw)
+            fields['transfer'] = Transfer(**fields['transfer'])
+            records.append(Event(**fields))
+        else:
+            records.append(CommunicationEvent(**raw))
+    return tuple(records)
