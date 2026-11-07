@@ -1,5 +1,10 @@
 # Exact optimisation benchmarks
 
+**Historical-model note:** this report predates the revised OFFER/BUY rules.
+Default one-buyer-message transfer budgets remain valid as just-in-time OFFER/BUY
+plans. Nonstandard seller-fee examples require explicit legacy mode and are not
+current-rule evidence. See [current protocol](offer_protocol.md).
+
 Measurements on Python 3.12.14, NumPy 2.3.5 and NetworkX 3.7 in this cloud worker.
 Five seeds (0–4) per size, task sizes uniform in [1,min(tokens,3)], other
 parameters at defaults, automatic search disabled during sampling. Each solver

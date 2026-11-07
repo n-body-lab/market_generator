@@ -12,7 +12,11 @@ class ExecutionMessages:
             raise ValueError('message counts must be nonnegative integers')
 
     def counts(self, token: int, seller: int, buyer: int) -> tuple[int, int]:
-        """Communication-cost interface: return buyer and seller message counts."""
+        """Compact transfer-plan expenditure: default buyer count is its OFFER.
+
+        Other counts are historical fixed-message compatibility policies.
+        Explicit BUY settlement in offers.py never charges these counts.
+        """
         return self.buyer, self.seller
 
 
@@ -22,6 +26,15 @@ class Market:
     tasks: tuple[frozenset[int], ...]
     initial_owners: tuple[int, ...]
     communication: ExecutionMessages = ExecutionMessages()
+    communication_protocol: str | None = None
+
+    def __post_init__(self) -> None:
+        # Compatibility only: old constructors/snapshots lacked a protocol field.
+        # Store the effective identity so downstream code never infers it from fees.
+        if self.communication_protocol is None:
+            object.__setattr__(self, 'communication_protocol',
+                               'offer_buy' if self.communication == ExecutionMessages(1, 0)
+                               else 'legacy_fixed_messages')
 
     @property
     def n_agents(self) -> int:

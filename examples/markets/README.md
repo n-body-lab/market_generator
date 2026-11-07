@@ -21,3 +21,9 @@ paying its execution message fee. Full and goal-relevant fragility both equal 1/
 Regenerate it with `python experiments/fragility_validation.py`. The older three
 economic examples remain valid full-action-space measurements; the high-decoy
 example has zero fragility in its goal-relevant subset.
+
+`offer_buy_market.json` is the current-rule generated example, reproduced by
+`python examples/offer_buy_market.py`. It includes explicit OFFER/BUY actions and
+final-balance accounting. The older `goal_relevant_fragile.json` uses a seller
+execution fee; its V0.3 claim is historical and requires `legacy_fixed_messages`
+on import. It is not a current OFFER/BUY fragility example.

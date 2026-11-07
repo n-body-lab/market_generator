@@ -1,0 +1,741 @@
+{
+  "data": {
+    "best_solution": {
+      "actions": [
+        {
+          "buyer": 0,
+          "seller": 2,
+          "token": 0
+        },
+        {
+          "buyer": 1,
+          "seller": 0,
+          "token": 1
+        },
+        {
+          "buyer": 2,
+          "seller": 0,
+          "token": 2
+        },
+        {
+          "buyer": 1,
+          "seller": 0,
+          "token": 0
+        },
+        {
+          "buyer": 1,
+          "seller": 2,
+          "token": 2
+        }
+      ],
+      "objective": [
+        5,
+        5,
+        33
+      ],
+      "protocol_actions": [
+        {
+          "buyer": 0,
+          "kind": "OFFER",
+          "offer_id": 0,
+          "seller": 2,
+          "token": 0
+        },
+        {
+          "buyer": 0,
+          "kind": "BUY",
+          "offer_id": 0
+        },
+        {
+          "buyer": 1,
+          "kind": "OFFER",
+          "offer_id": 1,
+          "seller": 0,
+          "token": 1
+        },
+        {
+          "buyer": 1,
+          "kind": "BUY",
+          "offer_id": 1
+        },
+        {
+          "buyer": 2,
+          "kind": "OFFER",
+          "offer_id": 2,
+          "seller": 0,
+          "token": 2
+        },
+        {
+          "buyer": 2,
+          "kind": "BUY",
+          "offer_id": 2
+        },
+        {
+          "buyer": 1,
+          "kind": "OFFER",
+          "offer_id": 3,
+          "seller": 0,
+          "token": 0
+        },
+        {
+          "buyer": 1,
+          "kind": "BUY",
+          "offer_id": 3
+        },
+        {
+          "buyer": 1,
+          "kind": "OFFER",
+          "offer_id": 4,
+          "seller": 2,
+          "token": 2
+        },
+        {
+          "buyer": 1,
+          "kind": "BUY",
+          "offer_id": 4
+        }
+      ]
+    },
+    "candidates": {
+      "0,1": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2,
+          1
+        ],
+        [
+          0,
+          2,
+          0,
+          1
+        ]
+      ],
+      "0,2": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2,
+          0,
+          2
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "1,0": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          2,
+          0
+        ],
+        [
+          1,
+          0,
+          2,
+          0
+        ]
+      ],
+      "1,2": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          0,
+          2
+        ],
+        [
+          1,
+          2,
+          0,
+          2
+        ]
+      ],
+      "2,0": [
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0,
+          2,
+          0
+        ],
+        [
+          2,
+          1,
+          0
+        ]
+      ],
+      "2,1": [
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          0,
+          1
+        ],
+        [
+          2,
+          0,
+          2,
+          1
+        ]
+      ]
+    },
+    "config": {
+      "alternatives": 3,
+      "asymmetric_prices": true,
+      "budget_leeway": 0.2,
+      "buyer_messages": 1,
+      "communication_protocol": "offer_buy",
+      "exact_max_agents": 6,
+      "exact_max_tokens": 12,
+      "exact_state_limit": 2000,
+      "generation_attempt_limit": 100,
+      "leeway_mode": "relative",
+      "max_candidate_depth": 3,
+      "n_agents": 3,
+      "n_tokens": 3,
+      "ownership_concentration": 0.5,
+      "price_distribution": "uniform",
+      "price_modifications": 0,
+      "price_range": [
+        1,
+        12
+      ],
+      "seed": 42,
+      "seller_messages": 0,
+      "structural_constraints": null,
+      "target_indirect_dependency_fraction": null,
+      "task_dependency_range": [
+        1,
+        3
+      ]
+    },
+    "difficulty": {
+      "discovery_proxies": {
+        "assumptions": "Each unmet requirement independently considers every agent as owner; overlaps ignored. Counts are proxies, not minimum messages.",
+        "location_assignment_search_space": 243,
+        "plausible_intermediaries_per_pair": 1,
+        "unknown_required_token_locations": 5,
+        "unknown_route_price_occurrences_from_demanders": 3
+      },
+      "resources": {
+        "absolute_slack": [
+          2,
+          6,
+          0
+        ],
+        "execution_communication_expenditure": 5,
+        "exploratory_communication_expenditure": 0,
+        "fraction_limited_slack": 0.3333333333333333,
+        "gross_trade_payments": 33,
+        "initial_budgets": [
+          11,
+          32,
+          0
+        ],
+        "limited_slack_threshold": 0.1,
+        "reference_budgets": [
+          9,
+          26,
+          0
+        ],
+        "relative_slack": [
+          0.2222222222222222,
+          0.23076923076923078,
+          null
+        ],
+        "relative_slack_zero_reference": "null; see absolute slack"
+      },
+      "routing": {
+        "average_required_first_visit_hops": 1.1666666666666667,
+        "average_token_walk_length": 1.6666666666666667,
+        "candidate_count_is_capped": true,
+        "candidate_first_hop_branching": {
+          "0,1": 2,
+          "0,2": 2,
+          "1,0": 2,
+          "1,2": 2,
+          "2,0": 2,
+          "2,1": 2
+        },
+        "legal_branching_factor_per_token": 2,
+        "maximum_required_first_visit_hops": 2,
+        "maximum_token_walk_length": 2,
+        "retained_alternatives_per_pair": {
+          "0,1": 2,
+          "0,2": 2,
+          "1,0": 2,
+          "1,2": 2,
+          "2,0": 2,
+          "2,1": 2
+        },
+        "revisits_and_cycle_closures": 0,
+        "shared_intermediary_route_counts": {
+          "0": 1,
+          "2": 1
+        },
+        "token_walk_lengths": [
+          2,
+          1,
+          2
+        ]
+      },
+      "strategic_proxies": {
+        "agent_token_route_participation": {
+          "0": 3,
+          "1": 3,
+          "2": 2
+        },
+        "interpretation": "Reference-route dependencies; not indispensable graph vertices, collusion or misalignment.",
+        "pairwise_task_dependency_overlap": {
+          "0,1": 1,
+          "0,2": 1,
+          "1,2": 2
+        },
+        "reference_intermediary_dependence": {
+          "0": 1,
+          "2": 1
+        },
+        "shared_demand_tokens": 2,
+        "single_transaction_removal_without_replanning": {
+          "incomplete_tasks": 3,
+          "invalid_ownership_or_credit": 2,
+          "still_complete": 0
+        },
+        "token_demand_counts": {
+          "0": 3,
+          "1": 1,
+          "2": 2
+        }
+      }
+    },
+    "feasibility_status": "verified",
+    "initial_state": {
+      "balances": [
+        11,
+        32,
+        0
+      ],
+      "events": [],
+      "execution_messages": 0,
+      "exploratory_messages": 0,
+      "histories": [
+        [
+          2
+        ],
+        [
+          0
+        ],
+        [
+          0
+        ]
+      ],
+      "owners": [
+        2,
+        0,
+        0
+      ],
+      "progress": [
+        [],
+        [],
+        [
+          0
+        ]
+      ]
+    },
+    "market": {
+      "communication": {
+        "buyer": 1,
+        "seller": 0
+      },
+      "communication_protocol": "offer_buy",
+      "initial_owners": [
+        2,
+        0,
+        0
+      ],
+      "prices": [
+        [
+          0,
+          10,
+          8
+        ],
+        [
+          6,
+          0,
+          11
+        ],
+        [
+          2,
+          9,
+          0
+        ]
+      ],
+      "tasks": [
+        [
+          0
+        ],
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          2
+        ]
+      ]
+    },
+    "metadata": {
+      "communication_protocol": "offer_buy",
+      "constraints_satisfied": true,
+      "exact_search": {
+        "discovered_states": 16,
+        "expanded_states": 16,
+        "incumbent_objective": [
+          5,
+          5,
+          33
+        ],
+        "lower_bound": [
+          5,
+          5,
+          33
+        ],
+        "optimality_gap": {
+          "absolute": 0,
+          "coordinate": null,
+          "earlier_coordinates_equal": true,
+          "relative": 0.0
+        },
+        "proof_scope": "empty initial offers; static prices; free cooperative SELL consent; just-in-time OFFER/BUY",
+        "termination_reason": "exhausted"
+      },
+      "execution_policy": "one taxed OFFER per transaction; BUY untaxed; no discovery-cost claim",
+      "generation_attempts": 1,
+      "package_version": "0.1.0",
+      "realised_properties": {
+        "competitive_alternative_fraction": 0.0,
+        "depth_10_fraction": 0.0,
+        "depth_11_fraction": 0.0,
+        "depth_12_fraction": 0.0,
+        "depth_13_fraction": 0.0,
+        "depth_14_fraction": 0.0,
+        "depth_15_fraction": 0.0,
+        "depth_16_fraction": 0.0,
+        "depth_17_fraction": 0.0,
+        "depth_18_fraction": 0.0,
+        "depth_19_fraction": 0.0,
+        "depth_1_fraction": 1.0,
+        "depth_20_fraction": 0.0,
+        "depth_21_fraction": 0.0,
+        "depth_22_fraction": 0.0,
+        "depth_23_fraction": 0.0,
+        "depth_24_fraction": 0.0,
+        "depth_25_fraction": 0.0,
+        "depth_26_fraction": 0.0,
+        "depth_27_fraction": 0.0,
+        "depth_28_fraction": 0.0,
+        "depth_29_fraction": 0.0,
+        "depth_2_fraction": 0.0,
+        "depth_30_fraction": 0.0,
+        "depth_31_fraction": 0.0,
+        "depth_32_fraction": 0.0,
+        "depth_3_fraction": 0.0,
+        "depth_4_fraction": 0.0,
+        "depth_5_fraction": 0.0,
+        "depth_6_fraction": 0.0,
+        "depth_7_fraction": 0.0,
+        "depth_8_fraction": 0.0,
+        "depth_9_fraction": 0.0,
+        "indirect_dependency_fraction": 0.0,
+        "limited_slack_fraction": 0.3333333333333333,
+        "mean_dependency_depth": 1.0,
+        "ownership_hhi": 0.5555555555555556,
+        "shared_demand_fraction": 0.8333333333333334,
+        "shared_intermediaries": 0
+      },
+      "reference_accounting": {
+        "active_offers": 0,
+        "communication_expenditure": 5,
+        "final_balances": [
+          16,
+          6,
+          16
+        ],
+        "gross_trading_expenditure": 33,
+        "initial_balances": [
+          11,
+          32,
+          0
+        ],
+        "transactions": 5
+      },
+      "reference_quality": {
+        "component_differences": [
+          0,
+          0,
+          0
+        ],
+        "lexicographic_excess": {
+          "absolute": 0,
+          "coordinate": null,
+          "earlier_coordinates_equal": true,
+          "relative": 0.0
+        },
+        "proven_optimum": [
+          5,
+          5,
+          33
+        ],
+        "reference_is_optimal": true,
+        "reference_objective": [
+          5,
+          5,
+          33
+        ]
+      },
+      "requested_properties": {},
+      "routing_objective": "independent gross cost; exact per token up to 8 demanders",
+      "seller_consent": "assumed free cooperative SELL at each reference BUY",
+      "structure_source": "seeded constrained generation"
+    },
+    "optimal_solution": {
+      "actions": [
+        {
+          "buyer": 0,
+          "seller": 2,
+          "token": 0
+        },
+        {
+          "buyer": 1,
+          "seller": 0,
+          "token": 1
+        },
+        {
+          "buyer": 2,
+          "seller": 0,
+          "token": 2
+        },
+        {
+          "buyer": 1,
+          "seller": 0,
+          "token": 0
+        },
+        {
+          "buyer": 1,
+          "seller": 2,
+          "token": 2
+        }
+      ],
+      "objective": [
+        5,
+        5,
+        33
+      ],
+      "protocol_actions": [
+        {
+          "buyer": 0,
+          "kind": "OFFER",
+          "offer_id": 0,
+          "seller": 2,
+          "token": 0
+        },
+        {
+          "buyer": 0,
+          "kind": "BUY",
+          "offer_id": 0
+        },
+        {
+          "buyer": 1,
+          "kind": "OFFER",
+          "offer_id": 1,
+          "seller": 0,
+          "token": 1
+        },
+        {
+          "buyer": 1,
+          "kind": "BUY",
+          "offer_id": 1
+        },
+        {
+          "buyer": 2,
+          "kind": "OFFER",
+          "offer_id": 2,
+          "seller": 0,
+          "token": 2
+        },
+        {
+          "buyer": 2,
+          "kind": "BUY",
+          "offer_id": 2
+        },
+        {
+          "buyer": 1,
+          "kind": "OFFER",
+          "offer_id": 3,
+          "seller": 0,
+          "token": 0
+        },
+        {
+          "buyer": 1,
+          "kind": "BUY",
+          "offer_id": 3
+        },
+        {
+          "buyer": 1,
+          "kind": "OFFER",
+          "offer_id": 4,
+          "seller": 2,
+          "token": 2
+        },
+        {
+          "buyer": 1,
+          "kind": "BUY",
+          "offer_id": 4
+        }
+      ]
+    },
+    "optimality_status": "optimal",
+    "reference_budgets": [
+      9,
+      26,
+      0
+    ],
+    "reference_solution": {
+      "actions": [
+        {
+          "buyer": 0,
+          "seller": 2,
+          "token": 0
+        },
+        {
+          "buyer": 1,
+          "seller": 0,
+          "token": 1
+        },
+        {
+          "buyer": 2,
+          "seller": 0,
+          "token": 2
+        },
+        {
+          "buyer": 1,
+          "seller": 0,
+          "token": 0
+        },
+        {
+          "buyer": 1,
+          "seller": 2,
+          "token": 2
+        }
+      ],
+      "objective": [
+        5,
+        5,
+        33
+      ],
+      "protocol_actions": [
+        {
+          "buyer": 0,
+          "kind": "OFFER",
+          "offer_id": 0,
+          "seller": 2,
+          "token": 0
+        },
+        {
+          "buyer": 0,
+          "kind": "BUY",
+          "offer_id": 0
+        },
+        {
+          "buyer": 1,
+          "kind": "OFFER",
+          "offer_id": 1,
+          "seller": 0,
+          "token": 1
+        },
+        {
+          "buyer": 1,
+          "kind": "BUY",
+          "offer_id": 1
+        },
+        {
+          "buyer": 2,
+          "kind": "OFFER",
+          "offer_id": 2,
+          "seller": 0,
+          "token": 2
+        },
+        {
+          "buyer": 2,
+          "kind": "BUY",
+          "offer_id": 2
+        },
+        {
+          "buyer": 1,
+          "kind": "OFFER",
+          "offer_id": 3,
+          "seller": 0,
+          "token": 0
+        },
+        {
+          "buyer": 1,
+          "kind": "BUY",
+          "offer_id": 3
+        },
+        {
+          "buyer": 1,
+          "kind": "OFFER",
+          "offer_id": 4,
+          "seller": 2,
+          "token": 2
+        },
+        {
+          "buyer": 1,
+          "kind": "BUY",
+          "offer_id": 4
+        }
+      ]
+    },
+    "seed": 42,
+    "status": "optimal",
+    "token_routes": [
+      [
+        2,
+        0,
+        1
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2,
+        1
+      ]
+    ]
+  },
+  "schema_version": "hivemarket/0.1"
+}

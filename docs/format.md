@@ -13,7 +13,7 @@ sequence, action, quoted price, buyer/seller messages, nullable future signature
 Exploratory message counters account for expenditure but do not certify who sent
 which message; the V0.1 event log certifies token transfers only.
 
-A solution stores `actions` and objective `[execution_messages, transfers,
+A solution stores its compact transfer `actions`, optional explicit `protocol_actions`, and objective `[execution_messages, transfers,
 gross_payments]`. Reference budgets are before leeway. `candidates` maps `"s,b"`
 to retained walks `[source,...,buyer]`. Dictionary keys in metrics are strings
 in JSON. `config` stores the complete seed/configuration; optional metrics can
@@ -45,3 +45,26 @@ these records using the existing versioned JSON envelope; the generation-result
 schema does not purport to describe standalone ledger envelopes. Neither decoding
 nor reconciliation verifies signatures or establishes a trusted initial endowment.
 See `final_validation.md` for an exercised mixed-ledger example.
+
+
+## Revised protocol extension
+
+New default solutions include `protocol_actions`: OFFER objects contain `kind`,
+`offer_id`, `token`, `seller`, `buyer`; BUY/WITHDRAW contain `kind`, `offer_id`,
+`buyer`. `decode_protocol` is the typed decoder. This additive optional field is
+included in the result schema; old exports without it remain readable. Config
+now declares `communication_protocol`, default `offer_buy`. Historical snapshots
+with nonstandard buyer/seller fees infer `legacy_fixed_messages` instead.
+Metadata includes protocol identity and reference communication/gross payments,
+transaction count, and final balances. Existing State/Transfer fields remain the
+compact normal-form projection; explicit runtime offer snapshots use OfferState.
+Use `validate_offer_execution` for its ledger; BUY event message fields there are
+zero, with OFFER expenditure in `offer_messages`. See `offer_protocol.md`.
+
+## Explicit market protocol identity
+
+New market exports store `communication_protocol` as `offer_buy` or
+`legacy_fixed_messages`. The field is optional only for old-file compatibility.
+Result import reconciles it with config protocol AND buyer/seller fees and, when
+present, metadata protocol. Old missing identity is resolved at the constructor/
+import boundary; matching fee numbers alone no longer switch existing markets.

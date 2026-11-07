@@ -26,8 +26,9 @@
    vertices; maximum candidate depth does not restrict whole journeys.
 8. Interleave routes in deterministic round-robin token order. Each token's own
    edges remain ordered; only one current owner can sell it.
-9. Accumulate each agent's net expenditure prefix. Take the maximum prefix plus
-   next action's pre-transfer affordability requirement (including seller messages).
+9. Expand each default reference transfer into one one-credit OFFER and one
+   untaxed atomic BUY, then accumulate each agent's net expenditure prefix. Take the maximum prefix plus
+   next action's pre-transfer affordability requirement (including the OFFER debit at issue time (seller messages apply only to historical fee models)).
    Allocate that minimum fixed-schedule budget, then add nonnegative leeway.
 10. Replay all actions and independently audit payments, affordability, ownership,
     persistent progress and lexicographic costs. A failure raises; it never emits

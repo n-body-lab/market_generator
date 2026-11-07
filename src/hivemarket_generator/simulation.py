@@ -4,6 +4,12 @@ from .models import Market, State, Transfer, Event
 
 
 def execute(market: Market, state: State, action: Transfer) -> State:
+    """Compact reference macro: one just-in-time OFFER + BUY at policy (1,0).
+
+    The Event's message count allocates the OFFER cost to this compact step;
+    it is not a separately taxed BUY. For standing offers and untaxed BUY
+    events use apply_protocol/replay_protocol and OfferState instead.
+    """
     t, s, b = action.token, action.seller, action.buyer
     if (not 0 <= t < market.n_tokens or not 0 <= s < market.n_agents
             or not 0 <= b < market.n_agents or s == b or state.owners[t] != s):

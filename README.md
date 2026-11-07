@@ -26,7 +26,7 @@ config = MarketConfig(
 )
 result = generate_market(config)
 assert result.feasibility_status == "verified"
-print(result.reference_solution.objective)  # execution messages, transfers, gross payments
+print(result.reference_solution.objective)  # OFFER expenditure, transfers, gross payments
 with open("market.json", "w") as f:
     f.write(dumps(result))
 restored = decode_result(loads(dumps(result)))
@@ -60,14 +60,46 @@ A view contains only the agent's balance, inventory, task, progress, incident
 prices, agent ID and total agent count. Full models and benchmarks belong to the
 generator. Python objects alone are not a security sandbox.
 
-The default `ExecutionMessages(buyer=1, seller=0)` charges one buyer message per
-transfer. Seller messages are configurable. Both sides must afford their own
-message costs before the atomic trade, and the buyer must also afford the price.
-Payments transfer credits; messages consume credits. `send_exploratory_message`
-charges a sender one credit separately and models no information gained.
-`communication.CommunicationCost` documents the extension contract. V0.1's codec
-and search support the fixed `ExecutionMessages` policy; a history-dependent
-protocol will need additional state and a codec.
+Current generation uses **OFFER / WITHDRAW / BUY**:
+
+- OFFER costs the buyer one credit immediately and creates a persistent, nonbinding
+  demand signal. The target need not own the token. No credits or token are reserved.
+- WITHDRAW closes the buyer's active offer for free and refunds nothing.
+- BUY requires an active associated offer, the named seller's current ownership,
+  and enough buyer credits for `P[buyer][seller]`. Atomic settlement transfers the
+  price with **no additional communication tax**, closing only that offer.
+
+Other offers survive purchases and seller ownership changes, including loss and
+reacquisition of a token. Completed agents can keep trading. Reference schedules
+issue exactly one OFFER immediately before each BUY; no extra OFFER is needed.
+
+```python
+from hivemarket_generator import verify_protocol_solution, protocol_summary
+
+plan = result.reference_solution.protocol_actions  # explicit OFFER/BUY records
+final = verify_protocol_solution(result.market, result.initial_state, result.reference_solution)
+print(protocol_summary(result.market, result.initial_state, final))
+```
+
+[Protocol and accounting details](docs/offer_protocol.md) explain standing offers,
+free withdrawals, serialized plans and the sequential feasibility assumptions.
+`OfferState` keeps the explicit offer ledger and untaxed settlement events.
+Its `offer_messages` counts OFFER expenditure. `validate_offer_execution` checks
+that ledger independently from a trusted initial snapshot.
+
+For compatibility, `Solution.actions` and `execute(Transfer)` retain the compact
+reference projection: at the default policy each step represents one just-in-time
+OFFER plus BUY. The compact Event's buyer message count allocates its OFFER cost;
+it is not an extra BUY charge. Use `apply_protocol`/`replay_protocol` when modelling
+persistent offers. Do not treat an explicit `OfferState.economy` as the compact
+fixed-message ledger; reconcile the complete OfferState with its protocol validator.
+
+Nonstandard `buyer_messages`/`seller_messages` require explicit
+`communication_protocol="legacy_fixed_messages"`. They exist only to reproduce
+historical experiments and are labelled as such in metadata; they are not current
+game rules. Old seller-fee fragility examples do not establish current-rule fragility.
+No full discovery protocol, broker, asynchronous escrow service or agent runtime
+is implemented.
 
 ## Algorithm and budgets
 
@@ -121,14 +153,18 @@ metrics rather than assuming monotonic difficulty between random draws.
 
 ## Optimality and scope
 
-The objective is lexicographic `(execution messages, token transfers, gross trade
-payments)`. Fixed messages per transfer make the first two coordinates redundant.
+The objective is lexicographic `(OFFER communication expenditure, token transfers, gross trade
+payments)`. In the reference normal form each transfer has one OFFER, so the
+first two coordinates are redundant. Starting from no offers, unused offers can
+be omitted and each used OFFER postponed to just before its BUY without reducing
+feasibility. This justifies the existing compact exact search for the revised rules.
+It does not prove anything about discovery costs or optimisation from pending offers.
 Discovery communication has **no** claimed minimum here. A cheap indirect route
 can lose to an expensive direct trade on the primary objective.
 
 `solve_exact(market, initial_state, state_limit=20000, incumbent=None)` searches
 all legal transfers on the complete graph, with immutable ownership, permanent
-progress, integer balances and fixed execution-message costs. The state space is
+progress, integer balances and one-credit OFFER costs in this normal form. The state space is
 finite. Costs are compared exactly; there are no numerical tolerances.
 
 - `optimal`: a feasible globally optimal schedule is proven under these rules.
@@ -254,3 +290,10 @@ one-credit exploratory `CommunicationEvent(sender, recipient)` in actual order;
 execution-message charges are already in transfer events. Reference verification
 runs strict reconciliation automatically. The [final report](docs/final_validation.md)
 includes a tested import/replay example, trust assumptions and the pilot-readiness verdict.
+
+The [independent protocol review](docs/offer_protocol_review.md) documents corrected
+configuration and snapshot-validation defects. Markets now carry explicit protocol
+identity checked against configuration and fees. Each reference BUY assumes a
+fresh buyer initiation plus the seller's cooperative, free SELL consent; this is
+an economic feasibility witness, not a seller-authorisation runtime. The review
+also verifies early downstream demand followed by intermediary acquisition.

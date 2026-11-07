@@ -4,6 +4,9 @@ from .models import Market, Transfer
 
 
 def reference_budgets(market: Market, actions: tuple[Transfer, ...]) -> tuple[int, ...]:
+    from .offers import uses_offer_protocol, reference_protocol, protocol_budgets
+    if uses_offer_protocol(market):
+        return protocol_budgets(market, reference_protocol(actions))
     spent = [0] * market.n_agents
     required = [0] * market.n_agents
     owners = list(market.initial_owners)

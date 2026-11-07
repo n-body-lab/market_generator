@@ -7,7 +7,7 @@ from hivemarket_generator.optimization import objective_gap, reference_quality
 @pytest.mark.parametrize('seed', range(12))
 def test_bound_matches_uniform_cost_and_is_valid_at_limit(seed):
     r = generate_market(MarketConfig(n_agents=3, n_tokens=2, task_dependency_range=(0, 2),
-                                     buyer_messages=seed % 2, seed=seed, exact_state_limit=0))
+                                     buyer_messages=seed % 2, communication_protocol='legacy_fixed_messages', seed=seed, exact_state_limit=0))
     a = solve_exact(r.market, r.initial_state, 50000, r.reference_solution)
     b = solve_exact(r.market, r.initial_state, 50000, r.reference_solution, use_lower_bound=False)
     assert a.conclusion == b.conclusion == 'optimal'
