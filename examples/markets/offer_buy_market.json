@@ -368,6 +368,7 @@
         "buyer": 1,
         "seller": 0
       },
+      "communication_protocol": "offer_buy",
       "initial_owners": [
         2,
         0,
@@ -427,7 +428,7 @@
           "earlier_coordinates_equal": true,
           "relative": 0.0
         },
-        "proof_scope": "empty initial offers: sequential just-in-time OFFER/BUY normal form for policy (1,0); historical fixed-message model otherwise",
+        "proof_scope": "empty initial offers; static prices; free cooperative SELL consent; just-in-time OFFER/BUY",
         "termination_reason": "exhausted"
       },
       "execution_policy": "one taxed OFFER per transaction; BUY untaxed; no discovery-cost claim",
@@ -516,6 +517,7 @@
       },
       "requested_properties": {},
       "routing_objective": "independent gross cost; exact per token up to 8 demanders",
+      "seller_consent": "assumed free cooperative SELL at each reference BUY",
       "structure_source": "seeded constrained generation"
     },
     "optimal_solution": {

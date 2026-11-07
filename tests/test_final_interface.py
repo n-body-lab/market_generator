@@ -16,7 +16,7 @@ def test_pilot_interface_is_reproducible_complete_and_private(level):
     raw = loads(dumps(a))
     assert {'config', 'initial_state', 'market', 'reference_solution', 'status',
             'optimality_status', 'difficulty', 'seed', 'metadata'} <= raw.keys()
-    assert {'prices', 'tasks', 'initial_owners', 'communication'} == raw['market'].keys()
+    assert {'prices', 'tasks', 'initial_owners', 'communication', 'communication_protocol'} == raw['market'].keys()
     assert {'owners', 'balances', 'progress', 'histories', 'events',
             'execution_messages', 'exploratory_messages'} == raw['initial_state'].keys()
     restored = decode_result(raw)

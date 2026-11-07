@@ -135,3 +135,62 @@ prefixes; generation adds protocol/final-balance metadata; serialization/schema
 support the additive action list; the exact solver emits that plan for witnesses.
 Configuration explicitly separates historical fee policies. Routing, price
 sampling/modification, token allocation and task generation were not changed.
+
+## Independent review clarifications
+
+### Seller consent and buyer autonomy
+
+A BUY in this deterministic witness is shorthand for **a fresh buyer initiation,
+the named seller's free consenting SELL, and atomic settlement**. Seller consent
+is assumed cooperative for the chosen reference transactions, not established by
+the ledger or inferred from an outstanding OFFER. The layer is not a unilateral
+purchase runtime. It models neither refusal nor the asynchronous delay between
+BUY and SELL. The reference proves conditional economic executability, not that
+an autonomous seller would consent. Consent is assumed independent of signalling
+history and imposes no extra charge or deadline. Without these assumptions the
+normal-form proof does not justify optimality for a different game.
+
+An old OFFER never settles automatically. Only a new `Buy(id, original_buyer)`
+can execute it; the seller cannot invoke it in the buyer's name through its own
+actor ID. A buyer who acquires the token elsewhere may leave old offers active
+or withdraw them for free, without being compelled to buy again.
+
+### Explicit model identity
+
+`Market.communication_protocol` stores `offer_buy` or `legacy_fixed_messages`.
+Generation sets it explicitly from the configuration. Protocol and fee equality
+are both checked by `prepare_market` and typed result import. Equal fees do not
+make a legacy market an OFFER/BUY market. To preserve old constructor and JSON
+compatibility only, omitted identity is resolved once at that boundary; it is
+then stored explicitly. Changing fees via `replace` does not silently change a
+market's declared protocol. Old contradictory exports are rejected rather than
+certified under the wrong model.
+
+### Snapshot validation and trust
+
+Explicit verifiers now check state dimensions, provenance, progress, integer
+balances/counters and standing-offer IDs/statuses even for an empty ledger.
+Settlement snapshots allow zero-message BUY events; compact-prefix events retain
+their original message allocation. Their economic reconstruction remains an
+independent ledger calculation. These structural checks do not authenticate the
+starting endowment or prove its past economic history: the starting checkpoint
+and any prior consent remain trusted inputs.
+
+### Early downstream demand example
+
+Let A=0, B=1, C=2, token 0 initially owned by C, and only A require it.
+With P[A,B]=3, P[B,C]=2 and initial balances (4,3,0), the explicit plan
+
+```python
+plan = (Offer(0, 0, 1, 0),   # A requests T from B, who does not yet own it
+        Offer(1, 0, 2, 1),   # B requests it from C
+        Buy(1, 1),          # cooperative SELL by C: B acquires T
+        Buy(0, 0))          # cooperative SELL by B: A uses its original offer
+```
+
+finishes with balances (0,3,2) and history (C,B,A). Two credits are consumed;
+prices 2 and 3 are redistributed. The original A-to-B demand remains active
+through B's acquisition. This demonstrates representation and verification of
+an explicit downstream/upstream signal sequence. It does not establish that
+agents discovered it or that normal-form schedules exhibit demand propagation.
+See the independent review and executable regression in `test_protocol_review.py`.

@@ -7,7 +7,7 @@ Do not reconcile that economy alone with the historical fixed-message validator.
 """
 from dataclasses import dataclass, field, replace
 from typing import TypeAlias
-from .models import Market, State, Transfer, Event, ExecutionMessages
+from .models import Market, State, Transfer, Event
 
 
 @dataclass(frozen=True)
@@ -51,8 +51,8 @@ class OfferState:
 
 
 def uses_offer_protocol(market: Market) -> bool:
-    """Nonstandard legacy fee policies remain historical compatibility models."""
-    return market.communication == ExecutionMessages(1, 0)
+    """Use the declared identity; equal prices/fees do not identify a protocol."""
+    return market.communication_protocol == 'offer_buy'
 
 
 def reference_protocol(actions: tuple[Transfer, ...]) -> tuple[ProtocolAction, ...]:
@@ -72,14 +72,38 @@ def _valid_ids(market: Market, action: ProtocolAction) -> None:
         raise ValueError('invalid offer endpoints or token')
 
 
+def _validate_snapshot(market: Market, snapshot: OfferState) -> None:
+    from .validation import validate_state
+    if not isinstance(snapshot, OfferState):
+        raise ValueError('expected an OfferState snapshot')
+    # Explicit BUY events are untaxed; a trusted compact prefix may coexist.
+    validate_state(market, snapshot.economy, allow_settlement_events=True)
+    if type(snapshot.offer_messages) is not int or snapshot.offer_messages != len(snapshot.offers):
+        raise ValueError('offer expenditure inconsistent with retained issued offers')
+    seen: set[int] = set()
+    for item in snapshot.offers:
+        if not isinstance(item, StandingOffer) or not isinstance(item.request, Offer):
+            raise ValueError('invalid standing offer')
+        _valid_ids(market, item.request)
+        if item.request.offer_id in seen or item.status not in ('active', 'withdrawn', 'fulfilled'):
+            raise ValueError('duplicate offer ID or invalid status')
+        seen.add(item.request.offer_id)
+
+
 def apply_protocol(market: Market, state: OfferState, action: ProtocolAction) -> OfferState:
-    """Atomic immutable action; failed BUY leaves its offer active and state intact."""
+    """Sequential reference action; BUY includes assumed free seller SELL consent.
+
+    This is a cooperative economic witness, not unilateral purchase permission.
+    The buyer must freshly invoke BUY; an old OFFER never triggers settlement.
+    Failed BUY leaves its offer active and the immutable snapshot intact.
+    """
     from .validation import validate_market
     validate_market(market)
     if not uses_offer_protocol(market):
         raise ValueError('explicit protocol requires one-credit OFFER and untaxed BUY policy')
     if not isinstance(action, (Offer, Withdraw, Buy)):
         raise ValueError('unsupported protocol action')
+    _validate_snapshot(market, state)
     _valid_ids(market, action)
     economy = state.economy
     offers = list(state.offers)
@@ -127,7 +151,14 @@ def apply_protocol(market: Market, state: OfferState, action: ProtocolAction) ->
 
 def replay_protocol(market: Market, initial: State | OfferState,
                     actions: tuple[ProtocolAction, ...]) -> OfferState:
+    from .validation import validate_market, validate_state
+    validate_market(market)
+    if not uses_offer_protocol(market):
+        raise ValueError('not an OFFER/BUY market')
+    if isinstance(initial, State):
+        validate_state(market, initial)
     state = initial if isinstance(initial, OfferState) else OfferState(initial)
+    _validate_snapshot(market, state)
     for action in actions:
         state = apply_protocol(market, state, action)
     return state
@@ -144,6 +175,8 @@ def validate_offer_execution(market: Market, initial: OfferState, final: OfferSt
     validate_market(market)
     if not uses_offer_protocol(market):
         raise ValueError('not an OFFER/BUY market')
+    _validate_snapshot(market, initial)
+    _validate_snapshot(market, final)
     anchor = initial.economy
     balances, owners = list(anchor.balances), list(anchor.owners)
     if len(balances) != market.n_agents or any(type(b) is not int or b < 0 for b in balances):

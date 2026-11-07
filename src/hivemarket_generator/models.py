@@ -26,6 +26,15 @@ class Market:
     tasks: tuple[frozenset[int], ...]
     initial_owners: tuple[int, ...]
     communication: ExecutionMessages = ExecutionMessages()
+    communication_protocol: str | None = None
+
+    def __post_init__(self) -> None:
+        # Compatibility only: old constructors/snapshots lacked a protocol field.
+        # Store the effective identity so downstream code never infers it from fees.
+        if self.communication_protocol is None:
+            object.__setattr__(self, 'communication_protocol',
+                               'offer_buy' if self.communication == ExecutionMessages(1, 0)
+                               else 'legacy_fixed_messages')
 
     @property
     def n_agents(self) -> int:

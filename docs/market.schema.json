@@ -135,6 +135,12 @@
             "seller"
           ],
           "additionalProperties": false
+        },
+        "communication_protocol": {
+          "enum": [
+            "offer_buy",
+            "legacy_fixed_messages"
+          ]
         }
       },
       "required": [

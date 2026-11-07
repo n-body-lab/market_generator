@@ -29,7 +29,7 @@ def test_cycles_persistence_conservation_and_history():
     after_message = send_exploratory_message(m, final, 1, 2)
     assert sum(after_message.balances) == sum(final.balances) - 1
     assert after_message.exploratory_messages == 1
-    no_messages = replace(m, communication=ExecutionMessages(0, 0))
+    no_messages = replace(m, communication=ExecutionMessages(0, 0), communication_protocol='legacy_fixed_messages')
     assert sum(replay(no_messages, s, actions).balances) == 60
 
 

@@ -60,3 +60,11 @@ transaction count, and final balances. Existing State/Transfer fields remain the
 compact normal-form projection; explicit runtime offer snapshots use OfferState.
 Use `validate_offer_execution` for its ledger; BUY event message fields there are
 zero, with OFFER expenditure in `offer_messages`. See `offer_protocol.md`.
+
+## Explicit market protocol identity
+
+New market exports store `communication_protocol` as `offer_buy` or
+`legacy_fixed_messages`. The field is optional only for old-file compatibility.
+Result import reconciles it with config protocol AND buyer/seller fees and, when
+present, metadata protocol. Old missing identity is resolved at the constructor/
+import boundary; matching fee numbers alone no longer switch existing markets.

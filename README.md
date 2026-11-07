@@ -290,3 +290,10 @@ one-credit exploratory `CommunicationEvent(sender, recipient)` in actual order;
 execution-message charges are already in transfer events. Reference verification
 runs strict reconciliation automatically. The [final report](docs/final_validation.md)
 includes a tested import/replay example, trust assumptions and the pilot-readiness verdict.
+
+The [independent protocol review](docs/offer_protocol_review.md) documents corrected
+configuration and snapshot-validation defects. Markets now carry explicit protocol
+identity checked against configuration and fees. Each reference BUY assumes a
+fresh buyer initiation plus the seller's cooperative, free SELL consent; this is
+an economic feasibility witness, not a seller-authorisation runtime. The review
+also verifies early downstream demand followed by intermediary acquisition.

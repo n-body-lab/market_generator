@@ -3,7 +3,7 @@ from dataclasses import asdict, is_dataclass
 import json
 from typing import Any
 from .models import Market, State, ExecutionMessages, Event, Transfer, initial_state, CommunicationEvent
-from .validation import validate_market, validate_state
+from .validation import validate_market, validate_state, validate_market_config
 
 
 def primitive(value: Any) -> Any:
@@ -34,7 +34,7 @@ def loads(text: str) -> Any:
 def decode_market(data: dict[str, Any]) -> Market:
     market = Market(tuple(tuple(row) for row in data['prices']),
                     tuple(frozenset(task) for task in data['tasks']), tuple(data['initial_owners']),
-                    ExecutionMessages(**data['communication']))
+                    ExecutionMessages(**data['communication']), data.get('communication_protocol'))
     validate_market(market)
     return market
 
@@ -54,18 +54,26 @@ def decode_result(data: dict[str, Any]) -> 'GenerationResult':
     from .generation import GenerationResult
     from .scheduling import Solution, verify_solution
     from .validation import audit_solution
-    market = decode_market(data['market'])
+    market_data = dict(data['market'])
+    # Honor declared historical configuration when an old market omitted identity.
+    if 'communication_protocol' not in market_data and 'communication_protocol' in data['config']:
+        market_data['communication_protocol'] = data['config']['communication_protocol']
+    market = decode_market(market_data)
     initial = decode_state(market, data['initial_state'])
     config_data = dict(data['config'])
     # Old snapshots with configurable seller/buyer fees are historical models.
-    config_data.setdefault('communication_protocol', 'offer_buy' if market.communication == ExecutionMessages(1, 0)
-                           else 'legacy_fixed_messages')
+    config_data.setdefault('communication_protocol', market.communication_protocol)
     for key in ('price_range', 'task_dependency_range'):
         config_data[key] = tuple(config_data[key])
     if isinstance(config_data['budget_leeway'], list):
         config_data['budget_leeway'] = tuple(config_data['budget_leeway'])
     if config_data.get('structural_constraints') is not None:
         config_data['structural_constraints'] = {k: tuple(v) for k,v in config_data['structural_constraints'].items()}
+    config = MarketConfig(**config_data)
+    validate_market_config(market, config)
+    metadata_protocol = (data.get('metadata') or {}).get('communication_protocol')
+    if metadata_protocol is not None and metadata_protocol != market.communication_protocol:
+        raise ValueError('metadata/market protocol mismatch')
     def solution(raw: dict | None) -> Solution | None:
         if raw is None:
             return None
@@ -82,7 +90,7 @@ def decode_result(data: dict[str, Any]) -> 'GenerationResult':
         tuple(tuple(r) for r in data['token_routes']),
         {tuple(int(x) for x in key.split(',')): tuple(tuple(p) for p in paths)
          for key, paths in data['candidates'].items()},
-        MarketConfig(**config_data), data['seed'], data['feasibility_status'],
+        config, data['seed'], data['feasibility_status'],
         data['optimality_status'], solution(data['optimal_solution']), solution(data['best_solution']),
         data['difficulty'], data['metadata'], data.get('status', 'optimal' if data['optimality_status'] == 'optimal' else 'feasible'))
     from .credits import reference_budgets, add_leeway

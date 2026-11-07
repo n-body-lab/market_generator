@@ -65,3 +65,14 @@ credits and 33 gross payments, with initial balances (11,32,0) and final balance
 (16,6,16). Its reference equals the independently proven optimum (5,5,33).
 See `offer_protocol.md` for the exact scope, current/historical distinction and
 standalone example command. Expensive research benchmark suites were not rerun.
+
+## Independent OFFER/BUY branch review
+
+The 118-test baseline was reproduced before changes. The corrected branch passes
+135 tests, including protocol/config mismatch rejection, forged-progress and
+checkpoint rejection, empty-ledger boundaries, explicit legacy identity at equal
+fees, early downstream demand, obsolete-offer autonomy, exhaustive endowment
+checks and pending-offer solver-scope guards. Eight exports pass schema/import
+checks. Seller SELL consent is explicitly assumed cooperative and free for the
+reference witness, not verified as an actual agent choice. Findings and the
+conditional merge verdict are in `offer_protocol_review.md`.

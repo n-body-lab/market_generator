@@ -1,8 +1,12 @@
 from collections.abc import Sequence
-from .models import Market, State, Event, CommunicationEvent
+from .models import Market, State, Event, CommunicationEvent, ExecutionMessages
 
 
 def validate_market(market: Market) -> None:
+    if market.communication_protocol not in ('offer_buy', 'legacy_fixed_messages'):
+        raise ValueError('invalid explicit market protocol')
+    if market.communication_protocol == 'offer_buy' and market.communication != ExecutionMessages(1, 0):
+        raise ValueError('OFFER/BUY market requires fee policy (1,0)')
     n = market.n_agents
     if n < 1 or len(market.prices) != n or any(len(row) != n for row in market.prices):
         raise ValueError('invalid price matrix dimensions')
@@ -16,7 +20,18 @@ def validate_market(market: Market) -> None:
         raise ValueError('invalid task token')
 
 
-def validate_state(market: Market, state: State) -> None:
+def validate_market_config(market: Market, config: 'MarketConfig') -> None:
+    """Reject supplied or imported markets that contradict their declared recipe."""
+    validate_market(market)
+    if (market.n_agents, market.n_tokens) != (config.n_agents, config.n_tokens):
+        raise ValueError('config dimensions disagree with market')
+    if market.communication_protocol != config.communication_protocol:
+        raise ValueError('market/config protocol mismatch')
+    if market.communication != ExecutionMessages(config.buyer_messages, config.seller_messages):
+        raise ValueError('market/config communication fee mismatch')
+
+
+def validate_state(market: Market, state: State, *, allow_settlement_events: bool = False) -> None:
     validate_market(market)
     if (len(state.owners) != market.n_tokens or len(state.histories) != market.n_tokens
             or len(state.balances) != market.n_agents or len(state.progress) != market.n_agents):
@@ -38,13 +53,18 @@ def validate_state(market: Market, state: State) -> None:
     messages = 0
     for index, event in enumerate(state.events):
         action = event.transfer
-        if not 0 <= action.token < market.n_tokens or not 0 <= action.buyer < market.n_agents:
+        if (any(type(i) is not int for i in (action.token, action.seller, action.buyer))
+                or not 0 <= action.token < market.n_tokens or not 0 <= action.buyer < market.n_agents
+                or not 0 <= action.seller < market.n_agents):
             raise ValueError('invalid event IDs')
-        if (type(event.sequence) is not int or event.sequence != index
+        expected_counts = market.communication.counts(action.token, action.seller, action.buyer)
+        actual_counts = (event.buyer_messages, event.seller_messages)
+        valid_counts = (actual_counts == expected_counts or (allow_settlement_events and actual_counts == (0, 0)))
+        if (any(type(v) is not int for v in (event.sequence, event.price, *actual_counts))
+                or event.sequence != index
                 or histories[action.token][-1] != action.seller
                 or action.buyer == action.seller or event.price != market.prices[action.buyer][action.seller]
-                or (event.buyer_messages, event.seller_messages) != market.communication.counts(
-                    action.token, action.seller, action.buyer)):
+                or not valid_counts):
             raise ValueError('invalid transfer event')
         histories[action.token] += (action.buyer,)
         messages += event.buyer_messages + event.seller_messages
@@ -93,6 +113,7 @@ def audit_solution(market: Market, initial: State, solution: 'Solution') -> None
 
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
+    from .config import MarketConfig
     from .scheduling import Solution
 
 

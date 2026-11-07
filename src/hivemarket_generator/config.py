@@ -63,7 +63,8 @@ class MarketConfig:
         if not math.isfinite(self.ownership_concentration) or self.ownership_concentration <= 0:
             raise ValueError('concentration must be finite and positive')
         values = (self.budget_leeway,) if isinstance(self.budget_leeway, (int, float)) else self.budget_leeway
-        if len(values) not in (1, self.n_agents) or any(not math.isfinite(x) or x < 0 for x in values):
+        expected_length = 1 if isinstance(self.budget_leeway, (int, float)) else self.n_agents
+        if len(values) != expected_length or any(not math.isfinite(x) or x < 0 for x in values):
             raise ValueError('invalid leeway')
         if self.leeway_mode not in ('absolute', 'relative'):
             raise ValueError('invalid leeway mode')

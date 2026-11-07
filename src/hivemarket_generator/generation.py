@@ -6,7 +6,8 @@ from .models import ExecutionMessages, Market, State, initial_state
 from .prices import generate_prices, modify_prices
 from .tasks import generate_tasks
 from .routing import candidate_routes
-from .validation import validate_market, audit_solution
+from .validation import validate_market, audit_solution, validate_market_config
+from .offers import uses_offer_protocol
 from .credits import reference_budgets, add_leeway
 from .scheduling import Solution, reference_schedule, verify_solution
 
@@ -19,7 +20,8 @@ def _candidate_instance(config: MarketConfig, rng: np.random.Generator) -> Marke
                            owners, candidates)
     dependencies = tuple((owners[t], i) for i, task in enumerate(tasks) for t in sorted(task) if owners[t] != i)
     final_prices = modify_prices(prices, config.price_modifications, rng, dependencies)
-    market = Market(final_prices, tasks, owners, ExecutionMessages(config.buyer_messages, config.seller_messages))
+    market = Market(final_prices, tasks, owners, ExecutionMessages(config.buyer_messages, config.seller_messages),
+                    communication_protocol=config.communication_protocol)
     validate_market(market)
     return market
 
@@ -83,9 +85,7 @@ def prepare_market(market: Market, config: MarketConfig) -> GenerationResult:
 
     No prices/tasks are regenerated. Metadata distinguishes supplied structures.
     """
-    validate_market(market)
-    if (market.n_agents, market.n_tokens) != (config.n_agents, config.n_tokens):
-        raise ValueError("config dimensions disagree with market")
+    validate_market_config(market, config)
     # No stale paths survive price modification.
     candidates = candidate_routes(market.prices, config.max_candidate_depth, config.alternatives)
     routes, solution = reference_schedule(market)
@@ -97,9 +97,10 @@ def prepare_market(market: Market, config: MarketConfig) -> GenerationResult:
                             best_solution=solution,
                             metadata={'routing_objective': 'independent gross cost; exact per token up to 8 demanders',
                                       'execution_policy': ('one taxed OFFER per transaction; BUY untaxed; no discovery-cost claim'
-                                                           if market.communication == ExecutionMessages(1, 0) else
+                                                           if uses_offer_protocol(market) else
                                                            'historical fixed-message policy; not revised game rules'),
-                                      'communication_protocol': ('offer_buy' if market.communication == ExecutionMessages(1, 0) else 'legacy_fixed_messages'),
+                                      'communication_protocol': market.communication_protocol,
+                                      'seller_consent': 'assumed free cooperative SELL at each reference BUY',
                                       'package_version': '0.1.0',
                                       'structure_source': 'supplied to prepare_market (generate_market uses seeded generation)'})
 
@@ -117,7 +118,7 @@ def prepare_market(market: Market, config: MarketConfig) -> GenerationResult:
                              'incumbent_objective': exact.best_solution.objective if exact.best_solution else None}})
         if exact.best_solution is not None:
             audit_solution(market, initial, exact.best_solution)
-    if market.communication == ExecutionMessages(1, 0):
+    if uses_offer_protocol(market):
         from .scheduling import verify_protocol_solution
         from .offers import protocol_summary
         final = verify_protocol_solution(market, initial, solution)

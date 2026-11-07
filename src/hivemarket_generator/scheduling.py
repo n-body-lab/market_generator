@@ -34,6 +34,9 @@ def make_solution(market: Market, actions: tuple[Transfer, ...]) -> Solution:
 
 
 def verify_protocol_solution(market: Market, initial: State, solution: Solution) -> OfferState:
+    if not isinstance(initial, State):
+        raise ValueError('solution verification requires a compact State with empty initial offers')
+    validate_state(market, initial)
     if not uses_offer_protocol(market):
         raise ValueError('historical fee policy is not the revised protocol')
     plan = solution.protocol_actions if solution.protocol_actions is not None else reference_protocol(solution.actions)

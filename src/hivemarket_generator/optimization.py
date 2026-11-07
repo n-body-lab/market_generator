@@ -7,6 +7,7 @@ from time import perf_counter
 from .models import Market, State, Transfer
 from .scheduling import Solution, objective, verify_solution, make_solution
 from .validation import validate_state
+from .offers import uses_offer_protocol
 
 
 @dataclass(frozen=True)
@@ -15,7 +16,7 @@ class OptimizationResult:
     best_solution: Solution | None
     expanded_states: int
     discovered_states: int
-    proof_scope: str = 'empty initial offers: sequential just-in-time OFFER/BUY normal form for policy (1,0); historical fixed-message model otherwise'
+    proof_scope: str = 'full-information reference model; protocol scope supplied by solver'
     conclusion: str = 'unknown'  # optimal, feasible, infeasible, unknown
     lower_bound: tuple[int, int, int] | None = None
     optimality_gap: dict | None = None
@@ -59,6 +60,8 @@ def solve_exact(market: Market, initial: State, state_limit: int = 20000,
     and consistent, including q=0. Search stores bitmask progress and path links,
     not copied histories/events; every returned witness is replayed independently.
     """
+    if not isinstance(initial, State):
+        raise ValueError('exact search requires a compact State with empty initial offers')
     validate_state(market, initial)
     if type(state_limit) is not int or state_limit < 0:
         raise ValueError('state_limit must be a nonnegative integer')
@@ -106,7 +109,9 @@ def solve_exact(market: Market, initial: State, state_limit: int = 20000,
             lower = min(lower, incumbent.objective)
         if status == 'optimal':
             lower = incumbent.objective
-        return OptimizationResult(status, incumbent, expanded, len(best), conclusion=conclusion,
+        scope = ('empty initial offers; static prices; free cooperative SELL consent; just-in-time OFFER/BUY'
+                 if uses_offer_protocol(market) else 'historical fixed-message model; no persistent-offer claim')
+        return OptimizationResult(status, incumbent, expanded, len(best), proof_scope=scope, conclusion=conclusion,
                                   lower_bound=lower,
                                   optimality_gap=objective_gap(incumbent.objective if incumbent else None, lower),
                                   termination_reason=reason)
