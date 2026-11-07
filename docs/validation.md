@@ -54,3 +54,14 @@ were verified exactly over seeds 0–4. Ledger corruption and intermediate
 unaffordability are independently checked against a trusted anchor. Seven research
 exports pass schema/import/strict replay. No expensive multi-seed scaling study
 was repeated; details and remaining trust assumptions are in `final_validation.md`.
+
+## Revised OFFER/WITHDRAW/BUY compatibility
+
+The sequential protocol extension passes 118 tests, including all previous 105.
+Default reference budgets now explicitly charge one OFFER before each untaxed BUY;
+price transfers and total-communication loss are reconciled independently. A
+three-agent/three-token seeded example completes five transactions for five OFFER
+credits and 33 gross payments, with initial balances (11,32,0) and final balances
+(16,6,16). Its reference equals the independently proven optimum (5,5,33).
+See `offer_protocol.md` for the exact scope, current/historical distinction and
+standalone example command. Expensive research benchmark suites were not rerun.

@@ -56,6 +56,29 @@
           },
           "minItems": 3,
           "maxItems": 3
+        },
+        "protocol_actions": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/offer_action"
+                  },
+                  {
+                    "$ref": "#/$defs/buy_action"
+                  },
+                  {
+                    "$ref": "#/$defs/withdraw_action"
+                  }
+                ]
+              }
+            }
+          ]
         }
       },
       "required": [
@@ -343,6 +366,82 @@
         "best_solution",
         "difficulty",
         "metadata"
+      ],
+      "additionalProperties": false
+    },
+    "offer_action": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "OFFER"
+        },
+        "offer_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "token": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "seller": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "buyer": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "kind",
+        "offer_id",
+        "token",
+        "seller",
+        "buyer"
+      ],
+      "additionalProperties": false
+    },
+    "buy_action": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "BUY"
+        },
+        "offer_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "buyer": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "kind",
+        "offer_id",
+        "buyer"
+      ],
+      "additionalProperties": false
+    },
+    "withdraw_action": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "WITHDRAW"
+        },
+        "offer_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "buyer": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "kind",
+        "offer_id",
+        "buyer"
       ],
       "additionalProperties": false
     }

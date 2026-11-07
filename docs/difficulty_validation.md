@@ -1,5 +1,10 @@
 # Difficulty validation: controlled market characterisation
 
+**Historical-model note:** this report predates the revised OFFER/BUY rules.
+Default one-buyer-message transfer budgets remain valid as just-in-time OFFER/BUY
+plans. Nonstandard seller-fee examples require explicit legacy mode and are not
+current-rule evidence. See [current protocol](offer_protocol.md).
+
 ## Protocol and interpretation
 
 Executed on Python 3.12.14, NumPy 2.3.5, NetworkX 3.7. Each condition uses

@@ -96,7 +96,10 @@ def prepare_market(market: Market, config: MarketConfig) -> GenerationResult:
     result = GenerationResult(market, initial, solution, required, routes, candidates, config, config.seed,
                             best_solution=solution,
                             metadata={'routing_objective': 'independent gross cost; exact per token up to 8 demanders',
-                                      'execution_policy': 'fixed buyer/seller messages; no discovery-cost claim',
+                                      'execution_policy': ('one taxed OFFER per transaction; BUY untaxed; no discovery-cost claim'
+                                                           if market.communication == ExecutionMessages(1, 0) else
+                                                           'historical fixed-message policy; not revised game rules'),
+                                      'communication_protocol': ('offer_buy' if market.communication == ExecutionMessages(1, 0) else 'legacy_fixed_messages'),
                                       'package_version': '0.1.0',
                                       'structure_source': 'supplied to prepare_market (generate_market uses seeded generation)'})
 
@@ -114,6 +117,11 @@ def prepare_market(market: Market, config: MarketConfig) -> GenerationResult:
                              'incumbent_objective': exact.best_solution.objective if exact.best_solution else None}})
         if exact.best_solution is not None:
             audit_solution(market, initial, exact.best_solution)
+    if market.communication == ExecutionMessages(1, 0):
+        from .scheduling import verify_protocol_solution
+        from .offers import protocol_summary
+        final = verify_protocol_solution(market, initial, solution)
+        result = replace(result, metadata=result.metadata | {'reference_accounting': protocol_summary(market, initial, final)})
     from .optimization import reference_quality
     result = replace(result, metadata=result.metadata | {
         'reference_quality': reference_quality(solution, result.optimal_solution)})

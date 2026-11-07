@@ -5,7 +5,7 @@ import math
 from itertools import count
 from time import perf_counter
 from .models import Market, State, Transfer
-from .scheduling import Solution, objective, verify_solution
+from .scheduling import Solution, objective, verify_solution, make_solution
 from .validation import validate_state
 
 
@@ -15,7 +15,7 @@ class OptimizationResult:
     best_solution: Solution | None
     expanded_states: int
     discovered_states: int
-    proof_scope: str = 'all feasible transfers with fixed budgets and V0.1 execution messages'
+    proof_scope: str = 'empty initial offers: sequential just-in-time OFFER/BUY normal form for policy (1,0); historical fixed-message model otherwise'
     conclusion: str = 'unknown'  # optimal, feasible, infeasible, unknown
     lower_bound: tuple[int, int, int] | None = None
     optimality_gap: dict | None = None
@@ -90,7 +90,7 @@ def solve_exact(market: Market, initial: State, state_limit: int = 20000,
             action, link = link
             actions.append(action)
         result = Solution(tuple(reversed(actions)), (0, 0, 0))
-        result = Solution(result.actions, objective(market, result.actions))
+        result = make_solution(market, result.actions)
         verify_solution(market, initial, result)
         return result
 

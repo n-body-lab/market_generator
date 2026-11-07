@@ -19,6 +19,7 @@ class MarketConfig:
     leeway_mode: str = "relative"
     buyer_messages: int = 1
     seller_messages: int = 0
+    communication_protocol: str = 'offer_buy'
     exact_state_limit: int = 20000
     exact_max_agents: int = 6
     exact_max_tokens: int = 12
@@ -34,6 +35,11 @@ class MarketConfig:
             value = getattr(self, name)
             if type(value) is not int or value < 0:
                 raise ValueError(f'{name} must be a nonnegative integer')
+        if self.communication_protocol not in ('offer_buy', 'legacy_fixed_messages'):
+            raise ValueError('unknown communication protocol')
+        if self.communication_protocol == 'offer_buy' and (self.buyer_messages, self.seller_messages) != (1, 0):
+            raise ValueError('revised protocol requires one OFFER credit and no BUY/seller tax; '
+                             'use legacy_fixed_messages explicitly for historical experiments')
         if self.n_agents < 1 or self.max_candidate_depth < 1 or self.alternatives < 1:
             raise ValueError('agents, depth and alternatives must be positive')
         if self.generation_attempt_limit < 1:

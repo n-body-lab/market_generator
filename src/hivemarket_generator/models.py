@@ -12,7 +12,11 @@ class ExecutionMessages:
             raise ValueError('message counts must be nonnegative integers')
 
     def counts(self, token: int, seller: int, buyer: int) -> tuple[int, int]:
-        """Communication-cost interface: return buyer and seller message counts."""
+        """Compact transfer-plan expenditure: default buyer count is its OFFER.
+
+        Other counts are historical fixed-message compatibility policies.
+        Explicit BUY settlement in offers.py never charges these counts.
+        """
         return self.buyer, self.seller
 
 

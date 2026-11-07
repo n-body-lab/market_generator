@@ -61,6 +61,9 @@ def audit_solution(market: Market, initial: State, solution: 'Solution') -> None
     progress. Message balances are checked before incoming sale proceeds.
     """
     validate_state(market, initial)
+    if solution.protocol_actions is not None:
+        from .scheduling import verify_protocol_solution
+        verify_protocol_solution(market, initial, solution)
     balances = list(initial.balances)
     owners = list(initial.owners)
     seen = [set(p) for p in initial.progress]

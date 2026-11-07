@@ -7,17 +7,20 @@ reversible restriction: scale monetary quantities before constructing a market.
 There is exactly one owner o(t). A task R_i is a set, and progress S_i records
 all required tokens ever possessed. Initially S_i=R_i intersect o^-1(i).
 
-A transfer (t,s,b) requires o(t)=s and b!=s. The communication policy assigns
-nonnegative integer message counts (m_b,m_s). All messages cost one credit.
-The buyer must hold P[b,s]+m_b and seller m_s **before** the atomic transfer.
-Balances change by (-P[b,s]-m_b,+P[b,s]-m_s); total credits decrease only
-by m_b+m_s. Progress adds t to S_b if required, permanently. Histories append
-b even for repeat visits. Events are ordered, contain the quoted price and message
-counts, and admit an optional signature field; V0.1 verifies by replay, not
-cryptography. Simulation is trusted enforcement, not a distributed ledger.
-Exploratory messages consume the sender's credits, transfer no token and add no
-information in this model. The protocol exposes their accounting but neither
-reference construction nor exact search assumes they are necessary.
+An OFFER identifies (id,t,s,b), with b!=s, and consumes one credit from b.
+It does not require o(t)=s or reserve purchase money. It remains active across
+ownership changes. WITHDRAW by b closes only that offer for free, without a refund.
+BUY requires that matching offer active, o(t)=s, and balance_b>=P[b,s]. It atomically
+transfers price P[b,s] from b to s and ownership to b, with no communication charge.
+Only its offer closes. Progress adds t to S_b permanently; histories append b,
+including repeat visits. Messages consume credits; trade payments conserve them.
+Independent exploratory messages retain their separate one-credit accounting.
+Provenance is verified by replay, not authenticated cryptographically.
+
+For the reference normal form each transfer has exactly one immediately preceding
+OFFER. Its combined delta is (-P[b,s]-1, +P[b,s]); the compact State event's message
+allocation denotes that OFFER rather than a BUY tax. Historical nonstandard
+fixed-message policies are retained only as labelled compatibility models.
 
 Only the generator sees (P,o,R) jointly. Local snapshots contain the agent's
 inventory, progress, task, balance, incident incoming/outgoing prices and n.
@@ -26,14 +29,13 @@ construction is an API boundary, not isolation against hostile Python code.
 
 For a selected ordered schedule let d_i be cumulative net expenditure before an
 action. Its minimum initial balance is max(0, max_action(d_i + q_i)), where q_i
-is that agent's pre-action affordability requirement (buyer price plus messages,
-seller messages). This includes earlier sales financing later purchases, and is
+is that agent's pre-action affordability requirement (one credit for OFFER, matrix price for BUY, zero for WITHDRAW). This includes earlier sales financing later purchases, and is
 componentwise necessary and sufficient for this fixed schedule. Relative leeway
 adds ceil(lambda_i B_i^ref); absolute leeway adds ceil(lambda_i). This is not
 a globally minimum endowment theorem.
 
-Objective is lexicographic (execution messages, transfers, gross payments).
-With a fixed messages-per-transfer policy, the first two coordinates are redundant.
+Objective is lexicographic (OFFER communication expenditure, transfers, gross payments).
+In the reference normal form M=X, so the first two coordinates are redundant.
 No claim about minimum discovery communication is made. All transfers on the
 complete directed graph remain legal, regardless of candidate-route depth.
 Candidate paths are bounded walks (positive prices make cycles unnecessary
@@ -53,3 +55,11 @@ are omitted because removing them preserves feasibility and improves messages;
 this argument applies only to the documented information-free V0.1 semantics.
 A reference incumbent gives a valid lexicographic upper bound. Exact search is
 optional and capped, with status and proof scope exported explicitly.
+
+
+For empty initial offers, omit unused offers/withdrawals and postpone every used
+OFFER to just before its BUY. Balances before that point weakly increase, and the
+retained credit funds the postponed OFFER. Thus the exact search on compact
+transfer states remains globally valid under the revised rules in this normal
+form. It does not optimise from an arbitrary state containing pending offers.
+See `offer_protocol.md` for the full scope and historical-model distinction.

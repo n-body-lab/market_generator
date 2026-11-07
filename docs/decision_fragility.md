@@ -1,5 +1,10 @@
 # Economic decision fragility
 
+**Historical-model note:** this report predates the revised OFFER/BUY rules.
+Default one-buyer-message transfer budgets remain valid as just-in-time OFFER/BUY
+plans. Nonstandard seller-fee examples require explicit legacy mode and are not
+current-rule evidence. See [current protocol](offer_protocol.md).
+
 `analyse_fragility` enumerates all currently affordable token transfers and uses
 exact continuation search to classify them. A complete witness proves preservation;
 exhaustion proves destruction. Capped searches with no witness are unclassified.

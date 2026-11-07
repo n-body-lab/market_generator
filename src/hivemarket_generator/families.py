@@ -14,7 +14,7 @@ def economic_family(name: str, seed: int = 42, decoys: int = 5,
         market = Market(((0, price), (price, 0)),
                         (frozenset({1}), frozenset({0})), (0, 1), ExecutionMessages(1, 1))
         config = MarketConfig(n_agents=2, n_tokens=2, task_dependency_range=(1, 1), seed=seed,
-                              buyer_messages=1, seller_messages=1,
+                              buyer_messages=1, seller_messages=1, communication_protocol='legacy_fixed_messages',
                               budget_leeway=(price - 1 + budget_leeway, budget_leeway), leeway_mode='absolute')
     elif name == 'robust':
         market = Market(((0, price), (price, 0)),

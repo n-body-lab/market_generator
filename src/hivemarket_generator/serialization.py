@@ -57,6 +57,9 @@ def decode_result(data: dict[str, Any]) -> 'GenerationResult':
     market = decode_market(data['market'])
     initial = decode_state(market, data['initial_state'])
     config_data = dict(data['config'])
+    # Old snapshots with configurable seller/buyer fees are historical models.
+    config_data.setdefault('communication_protocol', 'offer_buy' if market.communication == ExecutionMessages(1, 0)
+                           else 'legacy_fixed_messages')
     for key in ('price_range', 'task_dependency_range'):
         config_data[key] = tuple(config_data[key])
     if isinstance(config_data['budget_leeway'], list):
@@ -66,7 +69,8 @@ def decode_result(data: dict[str, Any]) -> 'GenerationResult':
     def solution(raw: dict | None) -> Solution | None:
         if raw is None:
             return None
-        value = Solution(tuple(Transfer(**a) for a in raw['actions']), tuple(raw['objective']))
+        value = Solution(tuple(Transfer(**a) for a in raw['actions']), tuple(raw['objective']),
+                         decode_protocol(raw['protocol_actions']) if raw.get('protocol_actions') is not None else None)
         verify_solution(market, initial, value)
         audit_solution(market, initial, value)
         return value
@@ -123,6 +127,7 @@ def decode_result(data: dict[str, Any]) -> 'GenerationResult':
 
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
+    from .offers import ProtocolAction
     from .generation import GenerationResult
 
 
@@ -141,3 +146,16 @@ def decode_ledger(data: list[dict[str, Any]]) -> tuple[Event | CommunicationEven
         else:
             records.append(CommunicationEvent(**raw))
     return tuple(records)
+
+
+def decode_protocol(data: list[dict[str, Any]]) -> tuple['ProtocolAction', ...]:
+    from .offers import Offer, Buy, Withdraw
+    constructors = {'OFFER': Offer, 'BUY': Buy, 'WITHDRAW': Withdraw}
+    result = []
+    for raw in data:
+        fields = dict(raw)
+        kind = fields.pop('kind')
+        if kind not in constructors:
+            raise ValueError('unknown protocol action')
+        result.append(constructors[kind](**fields))
+    return tuple(result)
