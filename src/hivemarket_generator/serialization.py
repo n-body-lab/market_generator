@@ -61,6 +61,7 @@ def decode_result(data: dict[str, Any]) -> 'GenerationResult':
     market = decode_market(market_data)
     initial = decode_state(market, data['initial_state'])
     config_data = dict(data['config'])
+    config_data.setdefault('minimum_initial_credits', 0)
     # Old snapshots with configurable seller/buyer fees are historical models.
     config_data.setdefault('communication_protocol', market.communication_protocol)
     for key in ('price_range', 'task_dependency_range'):
@@ -93,15 +94,16 @@ def decode_result(data: dict[str, Any]) -> 'GenerationResult':
         config, data['seed'], data['feasibility_status'],
         data['optimality_status'], solution(data['optimal_solution']), solution(data['best_solution']),
         data['difficulty'], data['metadata'], data.get('status', 'optimal' if data['optimality_status'] == 'optimal' else 'feasible'))
-    from .credits import reference_budgets, add_leeway
+    from .credits import reference_budgets, initial_endowments
     from .routing import candidate_routes
     if (market.n_agents, market.n_tokens) != (result.config.n_agents, result.config.n_tokens):
         raise ValueError('inconsistent config dimensions')
     if result.seed != result.config.seed or result.feasibility_status != 'verified':
         raise ValueError('invalid generation status/seed')
     expected_budgets = reference_budgets(market, reference.actions)
-    if result.reference_budgets != expected_budgets or initial.balances != add_leeway(
-            expected_budgets, result.config.budget_leeway, result.config.leeway_mode):
+    if result.reference_budgets != expected_budgets or initial.balances != initial_endowments(
+            expected_budgets, result.config.budget_leeway, result.config.leeway_mode,
+            result.config.minimum_initial_credits):
         raise ValueError('inconsistent reference budgets')
     if initial != initial_state(
             market, initial.balances):

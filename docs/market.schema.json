@@ -300,7 +300,14 @@
           "additionalProperties": false
         },
         "config": {
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "minimum_initial_credits": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0
+            }
+          }
         },
         "seed": {
           "type": "integer",

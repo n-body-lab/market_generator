@@ -8,7 +8,7 @@ from .tasks import generate_tasks
 from .routing import candidate_routes
 from .validation import validate_market, audit_solution, validate_market_config
 from .offers import uses_offer_protocol
-from .credits import reference_budgets, add_leeway
+from .credits import reference_budgets, add_leeway, initial_endowments
 from .scheduling import Solution, reference_schedule, verify_solution
 
 
@@ -90,7 +90,9 @@ def prepare_market(market: Market, config: MarketConfig) -> GenerationResult:
     candidates = candidate_routes(market.prices, config.max_candidate_depth, config.alternatives)
     routes, solution = reference_schedule(market)
     required = reference_budgets(market, solution.actions)
-    initial = initial_state(market, add_leeway(required, config.budget_leeway, config.leeway_mode))
+    before_floor = add_leeway(required, config.budget_leeway, config.leeway_mode)
+    initial = initial_state(market, initial_endowments(required, config.budget_leeway, config.leeway_mode,
+                                                     config.minimum_initial_credits))
     verify_solution(market, initial, solution)
     audit_solution(market, initial, solution)
     result = GenerationResult(market, initial, solution, required, routes, candidates, config, config.seed,
@@ -102,6 +104,21 @@ def prepare_market(market: Market, config: MarketConfig) -> GenerationResult:
                                       'communication_protocol': market.communication_protocol,
                                       'seller_consent': 'assumed free cooperative SELL at each reference BUY',
                                       'package_version': '0.1.0',
+                                      'credit_allocation': {
+                                          'reference_budgets': required,
+                                          'initial_credits_before_floor': before_floor,
+                                          'initial_credits': initial.balances,
+                                          'minimum_initial_credits': config.minimum_initial_credits,
+                                          'zero_credit_agents': initial.balances.count(0),
+                                          'agents_increased_by_floor': sum(b > old for b, old in zip(initial.balances, before_floor)),
+                                          'additional_credits_from_floor': sum(initial.balances) - sum(before_floor),
+                                          'zero_credit_agents_with_unfinished_tasks': sum(
+                                              b == 0 and bool(task - seen) for b, task, seen in
+                                              zip(initial.balances, market.tasks, initial.progress)),
+                                          'zero_credit_agents_before_floor_with_unfinished_tasks': sum(
+                                              b == 0 and bool(task - seen) for b, task, seen in
+                                              zip(before_floor, market.tasks, initial.progress)),
+                                      },
                                       'structure_source': 'supplied to prepare_market (generate_market uses seeded generation)'})
 
     if (market.n_agents <= config.exact_max_agents and market.n_tokens <= config.exact_max_tokens

@@ -27,10 +27,11 @@ class MarketConfig:
     target_indirect_dependency_fraction: float | None = None
     structural_constraints: dict[str, tuple[float, float]] | None = None
     generation_attempt_limit: int = 100
+    minimum_initial_credits: int = 0
 
     def __post_init__(self) -> None:
         for name in ('n_agents', 'n_tokens', 'max_candidate_depth', 'alternatives',
-                     'price_modifications', 'buyer_messages', 'seller_messages',
+                     'price_modifications', 'buyer_messages', 'seller_messages', 'minimum_initial_credits',
                      'exact_state_limit', 'exact_max_agents', 'exact_max_tokens', 'seed', 'generation_attempt_limit'):
             value = getattr(self, name)
             if type(value) is not int or value < 0:

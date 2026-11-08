@@ -146,8 +146,16 @@ minimum initial endowments.
 
 `budget_leeway=0.2` with `leeway_mode="relative"` adds `ceil(0.2*reference_budget)`.
 Absolute mode adds `ceil(leeway)` credits. A tuple sets per-agent leeway.
-A zero reference balance receives zero relative leeway; use absolute mode to
-fund such agents. `MarketConfig.preset("easy"|"medium"|"hard", **overrides)` and
+A zero reference balance still receives zero proportional leeway. To provide an
+independent communication-liquidity floor, set `minimum_initial_credits=3` (default
+0 preserves prior behaviour). Actual initial credits are
+`max(minimum_initial_credits, reference_budget + existing_leeway)`; reference budgets
+are unchanged. The floor must be a nonnegative integer, excluding booleans/floats.
+New results report `metadata["credit_allocation"]`, separating reference requirements,
+pre-floor and actual credits, the floor effect and zero-credit unfinished agents.
+Historical exports without the field import with floor zero. See the
+[100-seed credit-floor comparison](docs/credit_floor_validation.md) for results and
+limitations. Raising liquidity does not demonstrate autonomous coordination. `MarketConfig.preset("easy"|"medium"|"hard", **overrides)` and
 [example configurations](examples) expose concrete parameters. Compare actual
 metrics rather than assuming monotonic difficulty between random draws.
 
