@@ -68,3 +68,14 @@ New market exports store `communication_protocol` as `offer_buy` or
 Result import reconciles it with config protocol AND buyer/seller fees and, when
 present, metadata protocol. Old missing identity is resolved at the constructor/
 import boundary; matching fee numbers alone no longer switch existing markets.
+
+
+## Optional minimum initial credits
+
+Config now supports `minimum_initial_credits`, a nonnegative integer with default
+0. Missing fields in historical exports are treated as zero. Initial balances
+are checked against `max(floor, reference_budget + existing_leeway)` on typed
+import; the raw reference budgets retain their original schedule-minimum meaning.
+New generation metadata includes a `credit_allocation` group containing reference,
+pre-floor and actual budgets, the applied floor and zero/increased-agent counts.
+The existing result envelope and State shapes are unchanged.

@@ -32,3 +32,11 @@ def add_leeway(budgets: tuple[int, ...], leeway: float | tuple[float, ...], mode
     if mode not in ('relative', 'absolute'):
         raise ValueError('invalid mode')
     return tuple(b + math.ceil(v * b if mode == 'relative' else v) for b, v in zip(budgets, values))
+
+
+def initial_endowments(budgets: tuple[int, ...], leeway: float | tuple[float, ...],
+                       mode: str, minimum_initial_credits: int = 0) -> tuple[int, ...]:
+    """Apply the floor AFTER existing leeway; never alter reference requirements."""
+    if type(minimum_initial_credits) is not int or minimum_initial_credits < 0:
+        raise ValueError('minimum_initial_credits must be a nonnegative integer')
+    return tuple(max(minimum_initial_credits, b) for b in add_leeway(budgets, leeway, mode))
